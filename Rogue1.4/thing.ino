@@ -27,19 +27,12 @@ byte randPS(byte i) {     //i=0,potion 1,scroll
 }
 
 byte freeSlot() {
-  byte done = 0;
-  byte count = 0;
-  while (done == 0) {
-    if ( id[count] == 0 ) {
-      done = 1;
-    } else {
-      count++;
-      if (count == TMAX) {
-        done = 1;
-      }
+  for (uint8_t index = 0; index < TMAX; ++index) {
+    if(id[index] == 0) {
+      return index;
     }
   }
-  return count;
+  return TMAX;
 }
 
 byte sortItem() {
