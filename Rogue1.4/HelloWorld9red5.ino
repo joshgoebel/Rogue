@@ -22,7 +22,7 @@ struct score {        //my first 'structure'
 
 score glory[5];
 score tglory;
-
+/*
 const char nItem[113][8] PROGMEM = {
   "gold",
   "food",     "mold",
@@ -46,7 +46,7 @@ const char nItem[113][8] PROGMEM = {
   "telport",  "slow",     "confuse",  "clear",    "change",   "fast",     "sleep",    "missile",
   "cancel",   "nothing"
 };
-
+*/
 const char tsym[9] PROGMEM = {'*', ':', ')', '[', '!', '?', '=', '/', ','};
 const char tprob[9] PROGMEM = {0, 10, 15, 24, 33, 63, 93, 96, 100};
 
@@ -136,11 +136,14 @@ unsigned int tknow[4] = {0, 0, 0, 0}; //0:potion, 1:scroll, 2:ring, 3:wand
 
 byte adepth=26, wiz=0, welc=0;
 
-char gbuf[22];
-char gmon[10];
-char gitm[8];
-char gmes[15];
+#include "FlashStringHelper.h"
+FlashStringHelper activeMessage = nullptr;
 
+//char gbuf[22];
+char gmon[10];
+//char gitm[8];
+char gmes[15];
+/*
 const char trap[6][8] PROGMEM = {
   "door",
   "arrow",
@@ -149,7 +152,8 @@ const char trap[6][8] PROGMEM = {
   "poison",
   "rust"
 };
-
+*/
+/*
 const char mes[23][10] PROGMEM = {
 // 0123456789012345
   "welcome!",         //0
@@ -176,7 +180,7 @@ const char mes[23][10] PROGMEM = {
   "drained",          //21
   "ZZZ..."            //22
 };
-
+*/
 byte gstate = 0;
 
 ARDUBOY_NO_USB
