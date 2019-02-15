@@ -7,7 +7,7 @@ void eat(byte r) {
     ex = ex + 2;
   } else {
 */
-    mess(8);
+    setActiveMessage(8);
 //    hh = hh / 3 + 900 + random(200);
     hh = hh / 3 + 350 + random(50);
 //  }
@@ -16,10 +16,10 @@ void eat(byte r) {
 void wield(byte r) {
   if (bitRead(i4[r], 4) == 1) {
     if (bitRead(i4[r], 6) == 1) {
-      mess(9);            // cursed
+      setActiveMessage(9);            // cursed
     } else {
       bitWrite(i4[r], 4, 0);
-      mess(10);           //remove
+      setActiveMessage(10);           //remove
       if (ii[r] / 16 == 7) ringPut(r, -1);
     }
   } else {
@@ -27,20 +27,20 @@ void wield(byte r) {
       case 3:
       case 4:
         if (equip(ii[r] / 16, 1) != 0) {
-          mess(12);       //already wield
+          setActiveMessage(12);       //already wield
         } else {
           bitWrite(i4[r], 1, 1);
           bitWrite(i4[r], 4, 1);
-          mess(11);       //ready go
+          setActiveMessage(11);       //ready go
         }
         break;
       case 7:
         if (equip(7, 1)*equip(7, 2) != 0) {
-          mess(12);
+          setActiveMessage(12);
         } else {
           bitWrite(i4[r], 1, 1);
           bitWrite(i4[r], 4, 1);
-          mess(11);       //ready go
+          setActiveMessage(11);       //ready go
           ringPut(r, 1);
         }
         break;
@@ -179,7 +179,7 @@ void readScroll(byte r) {
         itmToGitm(ii[st] / 16, ii[st] % 16, 1);
       }
       //      itmToGitm(ii[st] / 16, ii[st] % 16, 1);
-      addBuf(gitm);
+//      addBuf(gitm);
       break;
     case 5:       //telport
       teleportHero();

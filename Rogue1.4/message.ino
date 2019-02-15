@@ -1,3 +1,8 @@
+#include <avr/pgmspace.h>
+#include "strings.h"
+#include "messaging.h"
+
+/*
 void addBuf(char aray[]){
   byte ex=0, i=0, i1=0;
   do{
@@ -48,5 +53,26 @@ void clearBuf(){
 void mess(byte i){
   clearBuf();
   mesToGmes(i);
+}
+*/
+
+void clearBuf()
+{
+//  activeMessage = nullptr;
+  setActiveMessage(29);
+}
+
+void setActiveMessage(byte id)
+{
+  activeMessage = asFlashStringHelper(pgm_read_ptr(&messages[id]));
+}
+
+/*void addBuf(char array[])
+{
+}*/
+
+void itmToGitm(byte type, byte r, byte k)
+{
+  activeMessage = asFlashStringHelper(getItemName(type, r, k));
 }
 

@@ -35,7 +35,7 @@ void title() {
     initHero();
     clearKnown();
     buildDungeon();
-    mess(0);
+    setActiveMessage(0);
     //    clearDungeon();
     //    makeDungeon4();
     //    placeMonst();
@@ -391,10 +391,11 @@ void traped(byte vari){
         break;
     }
   }
-  for(int i=0; i<8; i++){
-    gbuf[i]=pgm_read_byte(trap[vari]+i);
-  }
-  addBuf(" trap");
+  setActiveMessage( 23 + vari);
+//  for(int i=0; i<8; i++){
+//    gbuf[i]=pgm_read_byte(trap[vari]+i);
+//  }
+//  addBuf(" trap");
 }
 
 void charon(byte dmg, byte reason){

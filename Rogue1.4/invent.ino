@@ -1,3 +1,6 @@
+#include "strings.h"
+#include "FlashStringHelper.h"
+
 byte inputWait() {
   byte result = 0;
   do {
@@ -57,7 +60,7 @@ void drawInventry(byte st, byte mode) {
     } else {
       itmToGitm(ii[i]/16,ii[i]%16,bitRead(tknow[ii[i]/16-5],ii[i]%16));
     }
-    font5x7.print(gitm);
+    font5x7.print(activeMessage);
     if(bitRead(i4[i],5)==1){
       if(ii[i]/16 == 3){           //weapon
         font5x7.print('[');
@@ -172,7 +175,7 @@ byte action(byte st) {
             moveMonst();
             tweatHero();
           } else {
-            mess(22);
+            setActiveMessage(22);
           }
           ex=1;
         } else if(curs==1){
@@ -180,7 +183,7 @@ byte action(byte st) {
             throwItem(st);
             sortItem();
           } else {
-            mess(22);
+            setActiveMessage(22);
           }  
           ex=1;
         } else if(curs==2){
@@ -190,7 +193,7 @@ byte action(byte st) {
             moveMonst();
             tweatHero();
           } else {
-            mess(22);
+            setActiveMessage(22);
           }
           ex=1;
 //        } else if(curs==3){

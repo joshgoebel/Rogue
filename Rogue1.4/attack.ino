@@ -80,7 +80,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
     case 5:     //IceMon
       if (random(5) == 0) {
         hit = true; //flashHero();
-        mess(13);
+        setActiveMessage(13);
         hslep = random(5) + 4;
         if (random(20) == 0) {
 //          hp = 0;
@@ -94,7 +94,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       if (st > 3 || hasRing(5) == 0) {
         if (random(5) == 0) {
           hit = true; //flashHero();
-          mess(14);
+          setActiveMessage(14);
           st--;
         }
       }
@@ -102,7 +102,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
     case 9:     //Leprchaun
       if ( au > 50 && random(10) != 0 ) {
         hit = true; //flashHero();
-        mess(15);
+        setActiveMessage(15);
         au = au - random(50);
         ms[id] += 6*32;
       }
@@ -112,7 +112,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       if ( equip(4, 1) != 0 && bitRead(i4[eq - 1], 3) == 0) {
         if (hasRing(9) == 0) {
           hit = true; //flashHero();
-          mess(16);
+          setActiveMessage(16);
           i2[eq - 1]--;
         }
       }
@@ -122,7 +122,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
         byte t = random(20);
         if (bitRead(i4[t], 4) == 0) {
           hit = true; //flashHero();
-          mess(15);
+          setActiveMessage(15);
           deleteItem(t);
           ms[id] += 6*32;
         }
@@ -131,14 +131,14 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
     case 15:    //Flytrap
       if (hlevi == 0) {
         hit = true; //flashHero();
-        mess(17);
+        setActiveMessage(17);
         hheld = 1;
       }
       break;
     case 17:    //Wraith
       if (lv > 5 && random(5) == 0) {
         hit = true; //flashHero();
-        mess(20);
+        setActiveMessage(20);
         nl = nl / 2;
         ex = nl - 1;
         lv--;
@@ -149,7 +149,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
     case 22:    //Vampire
       if (random(10) < 4) {
         hit = true; //flashHero();
-        mess(21);
+        setActiveMessage(21);
         byte r = random(3);
         if (r % 2 == 0) {
           if (hasRing(5) == 0 || st > 5) {

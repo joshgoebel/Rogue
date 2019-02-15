@@ -223,12 +223,12 @@ void moveMonst() {
           } else if (ms[i] % 32 == 21 && dungeon[hx][hy] != 8 &&
                      dungeon[mx[i]][my[i]] % 10 == dungeon[hx][hy] % 10 && bitRead(m1[i], 3) == 1) {
             flashHero();
-            mess(18);
+            setActiveMessage(18);
             hconf = 10;
             bitWrite(m1[i], 3, 0);
           } else if (ms[i] % 32 == 25 && canBless() > 0 && random(2) == 0) {
             flashHero();
-            mess(19);
+            setActiveMessage(19);
             byte dmg = random(10)+10;
             charon(dmg,3);
 //            if( hp > dmg ){
@@ -347,7 +347,7 @@ void showMsg() {
   } else {
     locate(0, 7);
   }
-  font5x7.print(gbuf);
+  font5x7.print(activeMessage);
 }
 
 void placeThing() {
@@ -540,7 +540,7 @@ void checkThing(byte x, byte y) {
         break;
     }
     itmToGitm(type, r, k);
-    addBuf(gitm);
+//    addBuf(gitm);
     byte done = 0;
     if (id[thing[x][y] - 1] == 16) {
       au = au + t1[thing[x][y] - 1];
@@ -563,7 +563,7 @@ void checkThing(byte x, byte y) {
       }
       if (done == 0) {
         if (im == IMAX) {
-          mess(2);
+          setActiveMessage(2);
         } else {
           ii[im] = id[thing[x][y] - 1];
           i1[im] = t1[thing[x][y] - 1];
@@ -624,7 +624,7 @@ byte initState(byte mon) {
 void tweatHero() {
   ht++;
   if (ex >= nl && lv < 21) {   //level up
-    mess(6);
+    setActiveMessage(6);
     lv++;
     nl = nl * 2;
     byte r2 = random(8) + 3;
@@ -653,7 +653,7 @@ void tweatHero() {
   }
 
   if( hh < 60 || hp <= hpm / 4) {
-    arduboy.setRGBled(50,0,0);
+    arduboy.setRGBled(255,0,0);
   } else {
     arduboy.setRGBled(0,0,0); 
   }

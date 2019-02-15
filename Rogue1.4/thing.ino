@@ -92,11 +92,11 @@ void dropItem(byte x, byte y, byte st) {
       if (i1[st] == 0) deleteItem(st);
       dungeon[x][y] = dungeon[x][y] % 10 + 190;
     } else if (thing[x][y] != 0) {
-      mess(3);
+      setActiveMessage(3);
     } else {
       byte t = freeSlot();
       if (t == TMAX) {
-        mess(4);
+        setActiveMessage(4);
       } else {
         thing[x][y] = t + 1;
         id[t] = ii[st];
@@ -108,7 +108,7 @@ void dropItem(byte x, byte y, byte st) {
       }
     }
   } else {
-    mess(12);
+    setActiveMessage(12);
   }
 }
 
@@ -134,7 +134,7 @@ void useItem(byte st) {
     }
     drink(vari);
     itmToGitm(5, vari, 1);
-    addBuf(gitm);
+//    addBuf(gitm);
   } else if (kind == 6) {     //scroll
     if (hblnd == 0) {
       bitWrite(tknow[1], vari, 1);
@@ -145,10 +145,10 @@ void useItem(byte st) {
       readScroll(vari);
       if (ttab[1][vari] != 4) {
         itmToGitm(6, vari, 1);
-        addBuf(gitm);
+//        addBuf(gitm);
       }
     } else {
-      mess(1);
+      setActiveMessage(1);
     }
   } else if (kind == 7) {     //ring
     bitWrite(tknow[2], vari, 1);
@@ -300,10 +300,10 @@ void throwItem(byte i) {    //i=pack num 0 to 19
         bitWrite(i4[equip(3, 1) - 1], 4, 0);
       }
       bitWrite(i4[i], 4, 1);            // equip it enforced
-      mess(9);    // It cursed.
+      setActiveMessage(9);    // It cursed.
     }
   } else {
-    mess(12);     // wielded
+    setActiveMessage(12);     // wielded
   }
   moveMonst();
   tweatHero();
@@ -412,7 +412,7 @@ byte askDir() {
     drawHero();
   }
   //  msgc="dir?";
-  mess(5);
+  setActiveMessage(5);
   showMsg();
   arduboy.display();
   byte dir = inputWait();
