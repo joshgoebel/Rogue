@@ -162,10 +162,10 @@ void Font5x7::printChar(const char c, const int8_t x, int8_t y) {
   if (idx > -1) {
     
     if (_textColor == WHITE) {
-      Sprites::drawOverwrite(x, y, font_images, idx);
+      SpritesB::drawOverwrite(x, y, font_images, idx);
     }
     else {
-      Sprites::drawErase(x, y, font_images, idx);
+      SpritesB::drawErase(x, y, font_images, idx);
     }
 
   }
