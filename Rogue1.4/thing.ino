@@ -27,56 +27,55 @@ byte randPS(byte i) {     //i=0,potion 1,scroll
 }
 
 byte freeSlot() {
-  byte done = 0;
-  byte count = 0;
-  while (done == 0) {
-    if ( id[count] == 0 ) {
-      done = 1;
-    } else {
-      count++;
-      if (count == TMAX) {
-        done = 1;
-      }
+  for (uint8_t index = 0; index < TMAX; ++index) {
+    if(id[index] == 0) {
+      return index;
     }
   }
-  return count;
+  return TMAX;
+}
+
+void swap(byte & left, byte & right) {
+  byte temporary = left;
+  left = right;
+  right = temporary;
+}
+
+void swap(char & left, char & right) {
+  byte temporary = left;
+  left = right;
+  right = temporary;
 }
 
 byte sortItem() {
   byte count = 0;
-  for (int i = 0; i < IMAX; i++) {
+
+  for (byte i = 0; i < IMAX; ++i) {
     if (ii[i] == 0) {
       ii[i] = 255;
       count++;
     }
   }
-  for (int i = 0; i < IMAX; ++i) {
-    for (int j = i + 1; j < IMAX; ++j) {
+
+  for (byte i = 0; i < IMAX; ++i) {
+    for (byte j = (i + 1); j < IMAX; ++j) {
       if (ii[i] > ii[j]) {
-        byte tmp1 =  ii[i];
-        byte tmp2 =  i1[i];
-        byte tmp3 =  i2[i];
-        byte tmp4 =  i3[i];
-        byte tmp5 =  i4[i];
-        ii[i] = ii[j];
-        i1[i] = i1[j];
-        i2[i] = i2[j];
-        i3[i] = i3[j];
-        i4[i] = i4[j];
-        ii[j] = tmp1;
-        i1[j] = tmp2;
-        i2[j] = tmp3;
-        i3[j] = tmp4;
-        i4[j] = tmp5;
+        swap(ii[i], ii[j]);
+        swap(i1[i], i1[j]);
+        swap(i2[i], i2[j]);
+        swap(i3[i], i3[j]);
+        swap(i4[i], i4[j]);
       }
     }
   }
-  for (int i = 0; i < IMAX; i++) {
+
+  for (byte i = 0; i < IMAX; ++i) {
     if (ii[i] == 255) {
       ii[i] = 0;
     }
   }
-  return 20 - count;
+
+  return (20 - count);
 }
 
 byte findScroll(byte t) {
