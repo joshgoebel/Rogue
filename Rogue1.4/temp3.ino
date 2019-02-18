@@ -45,7 +45,7 @@ void makeDungeon4() {
     hasRoom[i] = 0;
   }
 
-  if ( dlv >=5 && random(20) == 0) {      //Big Room
+  if ( hero.dlv >=5 && random(20) == 0) {      //Big Room
     isBigRoom = 1;
     hasRoom[0]=1;
     roomSX[0]=1;

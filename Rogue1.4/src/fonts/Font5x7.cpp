@@ -36,7 +36,7 @@ const uint8_t PROGMEM font_images[] = {
 0x01,0x61,0x79,0x1F,0x07,	//'7'
 0x36,0x7F,0x49,0x7F,0x36,	//'8'
 0x06,0x4F,0x49,0x7F,0x3E,	//'9'
-0x00,0x36,0x36,0x00,0x00,	//':'
+0x00,0x00,0x36,0x36,0x00,	//':'
 0x00, 0x40, 0x34, 0x00, 0x00,	//';'
 0x00, 0x08, 0x14, 0x22, 0x41,	//'<'
 0x14, 0x14, 0x14, 0x14, 0x14,	//'='
@@ -108,6 +108,10 @@ const uint8_t PROGMEM font_images[] = {
 
 };
 
+const uint8_t PROGMEM back_ground[] = {
+6, 8,
+0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+};
 
 Font5x7::Font5x7(uint8_t lineSpacing) {
 
@@ -162,10 +166,11 @@ void Font5x7::printChar(const char c, const int8_t x, int8_t y) {
   if (idx > -1) {
     
     if (_textColor == WHITE) {
-      SpritesB::drawOverwrite(x, y, font_images, idx);
+      Sprites::drawOverwrite(x, y, font_images, idx);
     }
     else {
-      SpritesB::drawErase(x, y, font_images, idx);
+      Sprites::drawOverwrite(x, y, back_ground, 0);
+      Sprites::drawErase(x, y, font_images, idx);
     }
 
   }

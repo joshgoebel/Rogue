@@ -114,7 +114,7 @@ const char nitem97[] PROGMEM = "strong";
 const char nitem98[] PROGMEM = "dex";
 const char nitem99[] PROGMEM = "adorn";
 const char nitem100[] PROGMEM = "see";
-const char nitem101[] PROGMEM = "armour";
+const char nitem101[] PROGMEM = "armor";
 const char nitem102[] PROGMEM = "search";
 
 const char nitem103[] PROGMEM = "teleport";
@@ -265,8 +265,8 @@ const char message3[] PROGMEM = "something here";
 const char message4[] PROGMEM = "no slot";
 const char message5[] PROGMEM = "dir?";
 const char message6[] PROGMEM = "level up";
-const char message7[] PROGMEM = "Oops...";
-const char message8[] PROGMEM = "Yummy";
+const char message7[] PROGMEM = "oops...";
+const char message8[] PROGMEM = "yummy";
 const char message9[] PROGMEM = "it cursed";
 const char message10[] PROGMEM = "removed";
 const char message11[] PROGMEM = "ready go";
@@ -291,7 +291,9 @@ const char message28[] PROGMEM = "rust trap";
 
 const char message29[] PROGMEM = "";
 
-const char * const messages[30] PROGMEM =
+const char message30[] PROGMEM = "danger!";
+
+const char * const messages[31] PROGMEM =
 {
 	message0,
 	message1,
@@ -322,7 +324,8 @@ const char * const messages[30] PROGMEM =
   message26,
   message27,
   message28,
-  message29  
+  message29,
+  message30
 };
 
 const char selectorString[] PROGMEM = "> ";
