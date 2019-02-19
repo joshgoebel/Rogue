@@ -12,7 +12,8 @@ byte inputWait() {
     if (arduboy.justPressed(A_BUTTON)) result = 5;
     if (arduboy.justPressed(B_BUTTON)) result = 6;
   } while (result == 0);
-  clearBuf();
+  setActiveMessage(29);
+//  clearBuf();
   return result;
 }
 

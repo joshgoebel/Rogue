@@ -65,9 +65,10 @@ void landing(){
   locate(7,5);
   font5x7.print(F("A)Go Next"));
   locate(7,6);
-  font5x7.print(F("B)Save & quit"));
+  font5x7.print(F("B)Save&quit"));
 
   if (arduboy.justPressed(A_BUTTON) ) {
+    setActiveMessage(29);
     buildDungeon();
     gstate = 1;
   }
@@ -284,7 +285,7 @@ void gameloop() {
     }
   }
 
-  if (arduboy.justReleased(A_BUTTON)) {
+  if (arduboy.justPressed(A_BUTTON)) {
     if (ss == 1) {
       ss = 0;
     } else {
@@ -316,7 +317,8 @@ void gameloop() {
 
   if (arduboy.justPressed(B_BUTTON)) {
     ss = 0;
-    clearBuf();
+    setActiveMessage(29);
+//    clearBuf();
     inventry(0);
   }
 
@@ -360,7 +362,8 @@ void heroMove(byte dir) {
         hero.hx = hero.hx + dx;
         hero.hy = hero.hy + dy;
       }
-      clearBuf();
+      setActiveMessage(29);
+//      clearBuf();
       if (hero.hlevi == 0) {
         checkThing(hero.hx, hero.hy);
         if(dungeon[hero.hx][hero.hy] >= 31 && dungeon[hero.hx][hero.hy] <= 106){
@@ -374,7 +377,8 @@ void heroMove(byte dir) {
   } else {
     mm = monst[hero.hx + dx][hero.hy + dy];
     r = ms[mm - 1] % 32;
-    clearBuf();
+    setActiveMessage(29);
+//    clearBuf();
     hitMonst(mm, r, dx, dy);
   }
   wakeUp();

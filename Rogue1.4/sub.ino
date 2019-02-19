@@ -518,7 +518,8 @@ void drawThing() {
 
 void checkThing(byte x, byte y) {
   if (thing[x][y] == 0) {
-    clearBuf();
+    setActiveMessage(29);
+//    clearBuf();
   } else {
     byte type = tng[thing[x][y] - 1].ii / 16;
     byte r = tng[thing[x][y] - 1].ii % 16;
@@ -603,7 +604,7 @@ byte initState(byte mon) {
       result = 2;
       break;
     case 3:
-      if (random(5) == 0) {
+      if (random(2) == 0) {
         result = 2;
       } else {
         result = 1;
@@ -613,7 +614,7 @@ byte initState(byte mon) {
       result = 4;
       break;
     case 5:
-      if (random(5) == 0) {
+      if (random(2) == 0) {
         result = 4;
       } else {
         result = 1;

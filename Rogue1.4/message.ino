@@ -55,13 +55,13 @@ void mess(byte i){
   mesToGmes(i);
 }
 */
-
+/*
 void clearBuf()
 {
 //  activeMessage = nullptr;
   setActiveMessage(29);
 }
-
+*/
 void setActiveMessage(byte id)
 {
   activeMessage = asFlashStringHelper(pgm_read_ptr(&messages[id]));
