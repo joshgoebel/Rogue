@@ -232,9 +232,6 @@ void score() {
     gstate = 0;
   }
   if (arduboy.justPressed(B_BUTTON)) {
-    for (int i = 0; i < 5; i++) {
-      glory[i] = {0, 0};
-    }
     clearHiScore();
   }
 

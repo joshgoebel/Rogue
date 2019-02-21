@@ -11,9 +11,10 @@ void loadHiScore(){
 }
 
 void clearHiScore(){
-  for(int i=0; i<25; i++){
-    EEPROM.write(100+i, 0);
-  }  
+  for (int i = 0; i < 5; i++) {
+    glory[i] = {0, 0};
+  }
+  saveHiScore();
 }
 
 void saveStatus(){
