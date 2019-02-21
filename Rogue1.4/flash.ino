@@ -6,13 +6,14 @@ void flashHero(){
   }
 //  arduboy.setTextBackground(WHITE);
 //  arduboy.fillRect(hx*6+1, hy*8, 6,8,WHITE);
-  font5x7.setTextColor(BLACK);
+//  font5x7.setTextColor(BLACK);
   locate(hero.hx, hero.hy);
-  font5x7.print('@');
+//  font5x7.print('@');
+  font5x7.print('/');
   arduboy.display();
   delay(100);
 //  arduboy.setTextBackground(BLACK);
-  font5x7.setTextColor(WHITE);
+//  font5x7.setTextColor(WHITE);
 }
 
 void flashMonst(byte num){
@@ -23,17 +24,18 @@ void flashMonst(byte num){
   }
 //  arduboy.setTextBackground(WHITE);
 //  arduboy.fillRect(mx[num]*6+1, my[num]*8, 6,8,WHITE);
-  font5x7.setTextColor(BLACK);
+//  font5x7.setTextColor(BLACK);
   locate(mx[num], my[num]);
   if(hero.hblnd == 0 && bitRead(m1[num],6)==0){
-    font5x7.print((char)pgm_read_byte(mname+(ms[num] % 32)));
+//    font5x7.print((char)pgm_read_byte(mname+(ms[num] % 32)));
+    font5x7.print('/');
   } else {
     font5x7.print(' ');    
   }
   arduboy.display();
   delay(100);
 //  arduboy.setTextBackground(BLACK);
-  font5x7.setTextColor(WHITE);
+//  font5x7.setTextColor(WHITE);
 }
 
 void initHero(){
@@ -81,4 +83,3 @@ void initTable(){
     tknow[i]=0;
   }
 }
-

@@ -46,7 +46,7 @@ void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=va
 void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
   byte prob = pgm_read_byte(mstat[i] + 3) - hero.lv * 2 - hero.rdex * 2;
   byte rr = random(100);
-  byte dmg = 0;
+  char dmg = 0;
   byte a = equip(4, 1);
   byte ac = 0;
   if (a == 0) {
@@ -57,6 +57,7 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
 
   if (rr < prob) {
     dmg = (random(pgm_read_byte(mstat[i] + 1), pgm_read_byte(mstat[i] + 2)) * (100 - ac * 3)) / 100;
+    if(dmg<0) dmg=0;
 //    if (hero.hp <= dmg) {
 //      death=i+2;
 //      gstate = 2;

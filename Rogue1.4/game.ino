@@ -205,13 +205,15 @@ void score() {
     if (rank == i + 1) {
 //      arduboy.setTextBackground(WHITE);
 //      arduboy.fillRect(0,(2+i)*8,128,8,WHITE);
-      font5x7.setTextColor(BLACK);
+//      font5x7.setTextColor(BLACK);
+    locate(0, 2 + i);
+    font5x7.print('>');
     } else {
 //      arduboy.setTextBackground(BLACK);
-      font5x7.setTextColor(WHITE);
+//      font5x7.setTextColor(WHITE);
     }
-    locate(0, 2 + i);
-    font5x7.print(F("                     "));
+//    locate(0, 2 + i);
+//    font5x7.print(F("                     "));
     locate(1, 2 + i);
     font5x7.print(i + 1);
     locate(3, 2 + i);
@@ -224,7 +226,7 @@ void score() {
     }
   }
 //  arduboy.setTextBackground(BLACK);
-  font5x7.setTextColor(WHITE);
+//  font5x7.setTextColor(WHITE);
 
   if (arduboy.justPressed(A_BUTTON)) {
     gstate = 0;
@@ -289,7 +291,7 @@ void gameloop() {
     if (ss == 1) {
       ss = 0;
     } else {
-      if (dungeon[hero.hx][hero.hy] >= 11 && dungeon[hero.hx][hero.hy] <= 16) {
+      if (dungeon[hero.hx][hero.hy] >= 11 && dungeon[hero.hx][hero.hy] <= 16 && hero.hheld == 0) {
         hero.hmdet = 0;
         hero.hisee = 0;
         if (inv[hero.im - 1].ii == 144) {
@@ -447,4 +449,3 @@ void charon(byte dmg, byte reason){
 // 2 :lack of luck
 // 3 :hellfire
 // 4-:killed by X
-

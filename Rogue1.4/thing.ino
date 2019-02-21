@@ -195,8 +195,8 @@ byte randMonst(byte d) {
   } else if (fm > 21) {
     fm = 21;
   }
-  if (to > 26) {
-    to = 25;
+  if (to > 27) {
+    to = 26;
   }
   return random(fm, to);
 }

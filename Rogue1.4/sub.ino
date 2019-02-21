@@ -229,7 +229,7 @@ void moveMonst() {
           } else if (ms[i] % 32 == 25 && canBless() > 0 && random(2) == 0) {
             flashHero();
             setActiveMessage(19);
-            byte dmg = random(10)+10;
+            byte dmg = random(22-hero.lv);
             charon(dmg,3);
 //            if( hero.hp > dmg ){
 //              hero.hp = hero.hp - dmg; 

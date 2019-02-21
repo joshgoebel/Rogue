@@ -15,7 +15,7 @@
 Arduboy2Base arduboy;
 Font5x7 font5x7 = Font5x7();
 
-struct score {        //my first 'structure'
+struct Score {        //my first 'structure'
   long int gold;
   byte depth;
 };
@@ -56,8 +56,8 @@ struct item {
   byte i4;
 };
 
-score glory[5];
-score tglory;
+Score glory[5];
+Score tglory;
 /*
 const char nItem[113][8] PROGMEM = {
   "gold",
@@ -316,4 +316,3 @@ void loop() {
   }
   arduboy.display();
 }
-

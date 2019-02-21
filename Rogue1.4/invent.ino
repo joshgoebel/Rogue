@@ -24,8 +24,8 @@ void drawInventry(byte st, byte mode) {
   if(mode==0){
 //    arduboy.setTextBackground(WHITE);
 //    arduboy.fillRect(0,0,128,8,WHITE);
-    font5x7.setTextColor(BLACK);
-    font5x7.print(F(" Inventory     "));
+//    font5x7.setTextColor(BLACK);
+    font5x7.print(F("[Inventory]    "));
     font5x7.print( hero.hh );
     font5x7.print(F("  "));
   } else {
@@ -33,7 +33,7 @@ void drawInventry(byte st, byte mode) {
   }
   locate(0, 1);
 //  arduboy.setTextBackground(BLACK);
-  font5x7.setTextColor(WHITE);
+//  font5x7.setTextColor(WHITE);
   font5x7.print('>');
 
   if (st + 7 > hero.im) {
@@ -121,11 +121,11 @@ byte action(byte st) {
   byte curs = 0;
 //  arduboy.setTextBackground(WHITE);
 //  arduboy.fillRect(6,8,75,8,WHITE);
-  font5x7.setTextColor(BLACK);
+//  font5x7.setTextColor(BLACK);
   locate(2, 1);
-  font5x7.print(F(" Action        "));
+  font5x7.print(F("[Action]       "));
 //  arduboy.setTextBackground(BLACK);
-  font5x7.setTextColor(WHITE);
+//  font5x7.setTextColor(WHITE);
   locate(1, 2);
   font5x7.print(F("  use          "));
   locate(1, 3);
@@ -224,11 +224,11 @@ void showStatus() {
 
 //  arduboy.setTextBackground(WHITE);
 //  arduboy.fillRect(h*6,0,60,8,WHITE);
-  font5x7.setTextColor(BLACK);
+//  font5x7.setTextColor(BLACK);
   locate(h, 0);
-  font5x7.print(F("  Status  "));
+  font5x7.print(F(" [Status] "));
 //  arduboy.setTextBackground(BLACK);
-  font5x7.setTextColor(WHITE);
+//  font5x7.setTextColor(WHITE);
   for (int i = 1; i < 8; i++) {
     locate(h, i);
     font5x7.print(F("          "));
@@ -282,4 +282,3 @@ void search() {
     }
   }
 }
-
