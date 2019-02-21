@@ -14,7 +14,7 @@ void title() {
     locate(13, 2);
     font5x7.print(' ');
   }
-*/  
+*/
   if (wiz == 1) {
     locate(0, 7);
     font5x7.print(adepth);
@@ -125,7 +125,7 @@ void gameover() {
     locate(8, 5);
     font5x7.print(F("luck"));
   } else if(death==3){
-    locate(7, 4);    
+    locate(7, 4);
     font5x7.print(F("hellfire"));
   } else {
     locate(7, 4);
@@ -241,6 +241,7 @@ void score() {
 }
 
 byte checkHiScore() {
+  Score tglory;
   byte result = 0;
   if (hero.dlv == 0) hero.dlv = 255;
   if (glory[0].gold < hero.au) {
@@ -400,7 +401,7 @@ void traped(byte vari){
   byte dmg=0;
   if(random(2)==0){
     flashHero();
-  
+
     switch (vari){
       case 0:     //door
         hero.dlv++;

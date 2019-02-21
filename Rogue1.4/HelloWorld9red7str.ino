@@ -57,7 +57,7 @@ struct item {
 };
 
 Score glory[5];
-Score tglory;
+
 /*
 const char nItem[113][8] PROGMEM = {
   "gold",
@@ -252,7 +252,7 @@ void setup() {
 //  clearKnown();
 
 //  initHero();
-  
+
 //  clearDungeon();
 //  makeDungeon4();
 //  placeMonst();
@@ -268,7 +268,7 @@ void setup() {
 //  ii[6] = 7 * 16 + 1; i1[6] =  1; i2[6] = 0; i3[6] = 0; i4[6] = 0b00000000;
 
 
-/*  
+/*
     ii[5] = 6 * 16 + findScroll(7); i1[5] = 5; i2[5] = 0; i3[5] = 0; i4[5] = 0b10000000;
     ii[6] = 6 * 16 + findScroll(9); i1[6] = 20; i2[6] = 0; i3[6] = 0; i4[6] = 0b10000000;
 
