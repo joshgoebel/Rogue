@@ -306,19 +306,19 @@ void loop() {
       titleScreen();
       break;
     case gameloop:
-      gameloop();
+      gameLoop();
       break;
     case gameover:
-      gameover();
+      gameOver();
       break;
     case winner:
-      winner();
+      gameWinner();
       break;
     case score:
       showHighScores();
       break;
     case landing:
-      landing();
+      atLanding();
       break;
   }
   arduboy.display();

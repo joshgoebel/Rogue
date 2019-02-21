@@ -58,7 +58,7 @@ void titleScreen() {
   }
 }
 
-void landing(){
+void atLanding(){
   locate(5,2);
   font5x7.print(F("Next floor "));
   font5x7.print(hero.dlv);
@@ -82,7 +82,7 @@ void landing(){
   }
 }
 
-void gameover() {
+void gameOver() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -153,7 +153,7 @@ byte digits(long int num) {
   return ans;
 }
 
-void winner() {
+void gameWinner() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -262,7 +262,7 @@ byte checkHiScore() {
   return result;
 }
 
-void gameloop() {
+void gameLoop() {
   byte mm, r;
 
   if (arduboy.justPressed(LEFT_BUTTON)) {
