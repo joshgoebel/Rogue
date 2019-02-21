@@ -1,17 +1,19 @@
+#define EEPROM_HIGHSCORE 100
+
 void saveHiScore(){
-  for(int i=0; i<5; i++){
-    EEPROM.put(100+i*5, glory[i]);
+  for(uint8_t i = 0; i < 5; i++){
+    EEPROM.put(EEPROM_HIGHSCORE + i * 5, glory[i]);
   }
 }
 
 void loadHiScore(){
-  for(int i=0; i<5; i++){
-    EEPROM.get(100+i*5, glory[i]);
+  for(uint8_t i = 0; i < 5; i++){
+    EEPROM.get(EEPROM_HIGHSCORE + i * 5, glory[i]);
   }
 }
 
 void clearHiScore(){
-  for (int i = 0; i < 5; i++) {
+  for (uint8_t i = 0; i < 5; i++) {
     glory[i] = {0, 0};
   }
   saveHiScore();
