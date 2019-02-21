@@ -224,7 +224,14 @@ const char mes[23][10] PROGMEM = {
   "ZZZ..."            //22
 };
 */
-byte gstate = 0;
+enum GameState : uint8_t {
+  title = 0,
+  gameloop, // 1
+  gameover, // 2
+  winner,   // 3
+  score,    // 4
+  landing   // 5
+} gameState = title;
 
 ARDUBOY_NO_USB
 
@@ -294,23 +301,23 @@ void loop() {
   if (!(arduboy.nextFrame())) return;
   arduboy.pollButtons();
   arduboy.clear();
-  switch (gstate) {
-    case 0:
-      title();
+  switch (gameState) {
+    case title:
+      titleScreen();
       break;
-    case 1:
+    case gameloop:
       gameloop();
       break;
-    case 2:
+    case gameover:
       gameover();
       break;
-    case 3:
+    case winner:
       winner();
       break;
-    case 4:
-      score();
+    case score:
+      showHighScores();
       break;
-    case 5:
+    case landing:
       landing();
       break;
   }

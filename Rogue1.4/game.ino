@@ -1,4 +1,4 @@
-void title() {
+void titleScreen() {
 //  arduboy.setRGBled(0, 0, 0);
   locate(1, 2);
   font5x7.print(F("[@ ~]$ Rogue"));
@@ -45,7 +45,7 @@ void title() {
     //    mess(0);
     //    addBuf( dlv );
 //    welc = 1;
-    gstate = 1;
+    gameState = gameloop;
   }
   if (arduboy.justPressed(B_BUTTON) ){ //&& welc == 1) {
     if(EEPROM.read(20)==1){
@@ -53,7 +53,7 @@ void title() {
       loadStatus();
 //      hero.dlv++;
 //      buildDungeon();
-      gstate = 5;
+      gameState = landing;
     }
   }
 }
@@ -70,7 +70,7 @@ void landing(){
   if (arduboy.justPressed(A_BUTTON) ) {
     setActiveMessage(29);
     buildDungeon();
-    gstate = 1;
+    gameState = gameloop;
   }
 
   if (arduboy.justPressed(B_BUTTON) ) {
@@ -78,7 +78,7 @@ void landing(){
     saveStatus();
     wiz=0;
     adepth=26;
-    gstate = 0;
+    gameState = title;
   }
 }
 
@@ -140,7 +140,7 @@ void gameover() {
   font5x7.print(hero.au);
   if (arduboy.justPressed(A_BUTTON)) {
     rank = checkHiScore();
-    gstate = 4;
+    gameState = score;
   }
 }
 
@@ -186,11 +186,11 @@ void winner() {
 
   if (arduboy.justPressed(A_BUTTON)) {
     rank = checkHiScore();
-    gstate = 4;
+    gameState = score;
   }
 }
 
-void score() {
+void showHighScores() {
 
   //  byte rank = checkHiScore();
 
@@ -229,7 +229,7 @@ void score() {
 //  font5x7.setTextColor(WHITE);
 
   if (arduboy.justPressed(A_BUTTON)) {
-    gstate = 0;
+    gameState = title;
   }
   if (arduboy.justPressed(B_BUTTON)) {
     clearHiScore();
@@ -298,11 +298,11 @@ void gameloop() {
           hero.dlv++;
         }
         if (hero.dlv == 0) {
-          gstate = 3;
+          gameState = winner;
         } else {
-          gstate = 5;
+          gameState = landing;
         }
-//        gstate=5;
+//        gameState = landing;
 //        buildDungeon();
       } else {
         //      ss = 1;
@@ -437,7 +437,7 @@ void traped(byte vari){
 void charon(byte dmg, byte reason){
   if( hero.hp <= dmg ) {
     death = reason;
-    gstate = 2;
+    gameState = gameover;
   } else {
     hero.hp=hero.hp-dmg;
   }

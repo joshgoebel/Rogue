@@ -92,7 +92,7 @@ void drawMap() {    //@Pharap's sharp eye
           c = ' '; //arduboy.print(F(" "));
 //        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
 //          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
-        } else if (((dungeon[i][j] >= 1 && dungeon[i][j] <= 6) || (dungeon[i][j] >= 31 && dungeon[i][j] <= 106)) 
+        } else if (((dungeon[i][j] >= 1 && dungeon[i][j] <= 6) || (dungeon[i][j] >= 31 && dungeon[i][j] <= 106))
           && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
           if ( dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
             c = '.'; //arduboy.print(F("."));
@@ -114,7 +114,7 @@ void drawMap() {    //@Pharap's sharp eye
 //          }
         } else if (dungeon[i][j] >= 111 && dungeon[i][j] <= 186) {
           c = '^'; //arduboy.print(F("^"));
-        
+
         } else if (dungeon[i][j] >= 191 && dungeon[i][j] <= 198) {
           c = '?'; //arduboy.print(F("?"));
         } else if (dungeon[i][j] >= 201 && dungeon[i][j] <= 206) {
@@ -143,7 +143,7 @@ void drawHero() {     //@Pharap's sharp eye
       for (int j = 0; j <= 2; j++) {
         int tx = hero.hx + i - 1;
         int ty = hero.hy + j - 1;
-        if ((dungeon[tx][ty] >= 1 && dungeon[tx][ty] <= 6) || 
+        if ((dungeon[tx][ty] >= 1 && dungeon[tx][ty] <= 6) ||
           (dungeon[tx][ty] >= 31 && dungeon[tx][ty] <= 106) ) { // (tx >= 0 && tx <= 20 && ty >= 0 && ty <= 7)
           locate(tx, ty);
           font5x7.print('.');
@@ -232,13 +232,13 @@ void moveMonst() {
             byte dmg = random(22-hero.lv);
             charon(dmg,3);
 //            if( hero.hp > dmg ){
-//              hero.hp = hero.hp - dmg; 
+//              hero.hp = hero.hp - dmg;
 //            }
           } else {
-            
+
             char d=1;
             if(ms[i]/32 == 7) d=-1;
-            
+
             if ( mx[i] > hero.hx && monst[mx[i] - d][my[i]] == 0
                 && dungeon[mx[i] - d][my[i]] >= 1 && dungeon[mx[i] - d][my[i]] <= 190) {
               r=2-d;
@@ -574,7 +574,7 @@ void checkThing(byte x, byte y) {
           inv[hero.im].i4 = tng[thing[x][y] - 1].i4;
 */
           inv[hero.im] = tng[thing[x][y]-1];
-          
+
           deleteThing(thing[x][y] - 1);
           thing[x][y] = 0;
           hero.im++;
@@ -660,7 +660,7 @@ void tweatHero() {
 //  if( hero.hh < 60 || hero.hp <= hero.hpm / 4) {
 //    arduboy.setRGBled(255,0,0);
 //  } else {
-//    arduboy.setRGBled(0,0,0); 
+//    arduboy.setRGBled(0,0,0);
 //  }
 
   if( hero.hh < 60 || hero.hp <= hero.hpm / 4) {
@@ -669,7 +669,7 @@ void tweatHero() {
 
   if (hero.hh <= 0) {  //gashi
     death=0;
-    gstate = 2;
+    gameState = gameover;
   }
   for (int i = 0; i < hasRing(10) * 2; i++) {
     search();

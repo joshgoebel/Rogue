@@ -54,7 +54,7 @@ void drawInventry(byte st, byte mode) {
 
     if(bitRead(inv[i].i4,7)==1){
         font5x7.print(inv[i].i1);
-        font5x7.print(' ');      
+        font5x7.print(' ');
     }
     if(inv[i].ii/16<5){
       itmToGitm(inv[i].ii/16,inv[i].ii%16,0);
@@ -68,7 +68,7 @@ void drawInventry(byte st, byte mode) {
         font5x7.print((int)inv[i].i2);
         font5x7.print(',');
         font5x7.print((int)inv[i].i3);
-        font5x7.print(']');      
+        font5x7.print(']');
       } else if(inv[i].ii/16 == 4 || inv[i].ii/16 == 8){      //armor or ring
         font5x7.print('[');
         font5x7.print((int)inv[i].i2);
@@ -185,7 +185,7 @@ byte action(byte st) {
             sortItem();
           } else {
             setActiveMessage(22);
-          }  
+          }
           ex=1;
         } else if(curs==2){
           if(hero.hslep == 0){
@@ -200,7 +200,7 @@ byte action(byte st) {
 //        } else if(curs==3){
 //          saveStatus();
 //          loadStatus();
-//          gstate=2;
+//          gameState = gameover;
 //          ex=1;
         }
         break;
