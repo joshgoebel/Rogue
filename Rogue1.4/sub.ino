@@ -606,20 +606,17 @@ DEBUG_STORAGE byte initState(byte mon) {
   return result;
 }
 
-void tweatHero() {
+DEBUG_STORAGE void tweatHero() {
   hero.turns++;
   if (hero.experience >= hero.exp_next_level && hero.level < 21) {   //level up
-    setActiveMessage(6);
-    hero.level++;
-    hero.exp_next_level = hero.exp_next_level * 2;
-    byte r2 = random(8) + 3;
-    hero.hp = hero.hp + r2;
-    hero.maxHP = hero.maxHP + r2;
+    levelUp();
   }
 //  if ( hero.hp < hero.maxHP && hero.turns % (22 - hero.level) == 0) {
   if ( hero.hp < hero.maxHP && hero.turns % ((22 - hero.level)/3+1) == 0) {
     hero.hp = hero.hp + 1 + hasRing(2);
   }
+
+  // effects wear off
   if (confused()) hero.hconf--;
   if (blind()) hero.hblnd--;
   if (hallucinating()) hero.hhall--;
@@ -627,13 +624,29 @@ void tweatHero() {
   if (sleeping()) hero.hslep--;
   if (levitating()) hero.hlevi--;
 
-  if ( hasRing(1) > 0 && random(12) == 0) teleportHero();
+  if ( hasRing(1) && random(12) == 0) teleportHero();
 
-  hero.hunger = hero.hunger - 1 + hasRing(3);
-  if (equip(7, 1) != 0 && hero.turns % 2 == 0) { //ring right
-    hero.hunger--;
+  handleHunger();
+
+  for (int i = 0; i < hasRing(10) * 2; i++) {
+    search();
   }
-  if (equip(7, 2) != 0 && hero.turns % 2 == 1) { //ring left
+}
+
+DEBUG_STORAGE void levelUp() {
+    setActiveMessage(6);
+    hero.level++;
+    hero.exp_next_level *= 2;
+    byte additionalHP = random(8) + 3;
+    hero.hp += additionalHP;
+    hero.maxHP += additionalHP;
+}
+
+DEBUG_STORAGE void handleHunger() {
+  hero.hunger = hero.hunger - 1 + hasRing(3);
+  if (equip(7, 1) && !(hero.turns & 1)) { //ring right
+    hero.hunger--;
+  } else if (equip(7, 2) && (hero.turns & 1)) { //ring left
     hero.hunger--;
   }
 
@@ -651,8 +664,4 @@ void tweatHero() {
     death=0;
     gameState = gameover;
   }
-  for (int i = 0; i < hasRing(10) * 2; i++) {
-    search();
-  }
 }
-
