@@ -70,8 +70,13 @@ DEBUG_STORAGE void initHero(){
 
 DEBUG_STORAGE void initTable(){
   const byte vari[4] = {maxPotions, maxScrolls, maxRings, maxWands};
-  for (int v = 0; v < 4; v++) {
-    for (int i = 0; i < 50; i++) {
+  for (byte v = 0; v < 4; v++) {
+    // generate ordered lookup table
+    for (byte i = 0; i < maxPotions; i++) {
+      ttab[v][i] = i;
+    }
+    // randomize it
+    for (byte i = 0; i < 50; i++) {
       byte r1 = random(vari[v]);
       byte r2 = random(vari[v]);
       byte tmp = ttab[v][r1];
@@ -79,7 +84,7 @@ DEBUG_STORAGE void initTable(){
       ttab[v][r2] = tmp;
     }
   }
-  for(int i=0; i<4; i++){
+  for(byte i=0; i<4; i++){
     tknow[i]=0;
   }
 }
