@@ -130,7 +130,7 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       }
       break;
     case 15:    //Flytrap
-      if (hero.hlevi == 0) {
+      if (!levitating()) {
         hit = true; //flashHero();
         setActiveMessage(17);
         hero.hheld = 1;

@@ -170,7 +170,7 @@ byte action(byte st) {
         break;
       case 5:
         if(curs==0){
-          if(hero.hslep == 0) {
+          if(!sleeping()) {
             useItem(st);
             sortItem();
             moveMonst();
@@ -180,7 +180,7 @@ byte action(byte st) {
           }
           ex=1;
         } else if(curs==1){
-          if(hero.hslep == 0) {
+          if(!sleeping()) {
             throwItem(st);
             sortItem();
           } else {
@@ -188,7 +188,7 @@ byte action(byte st) {
           }
           ex=1;
         } else if(curs==2){
-          if(hero.hslep == 0){
+          if(!sleeping()){
             dropItem(hero.hx, hero.hy, st);
             sortItem();
             moveMonst();
@@ -217,10 +217,10 @@ void showStatus() {
   if (hero.hx < 10) {
     h = 11;
   }
-  if(hero.hblnd==0) drawMap();
+  if(!blind()) drawMap();
   drawHero();
-  if(hero.hblnd==0) drawThing();
-  if(hero.hblnd==0) drawMonst();
+  if(!blind()) drawThing();
+  if(!blind()) drawMonst();
 
 //  arduboy.setTextBackground(WHITE);
 //  arduboy.fillRect(h*6,0,60,8,WHITE);

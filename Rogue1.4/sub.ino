@@ -118,7 +118,7 @@ void drawMap() {    //@Pharap's sharp eye
 
 
 void drawHero() {     //@Pharap's sharp eye
-  if (hero.hblnd == 0) {
+  if (!blind()) {
     for (int i = 0; i <= 2; i++) {
       for (int j = 0; j <= 2; j++) {
         int tx = hero.hx + i - 1;
@@ -620,12 +620,12 @@ void tweatHero() {
   if ( hero.hp < hero.hpm && hero.ht % ((22 - hero.lv)/3+1) == 0) {
     hero.hp = hero.hp + 1 + hasRing(2);
   }
-  if (hero.hconf > 0) hero.hconf--;
-  if (hero.hblnd > 0) hero.hblnd--;
+  if (confused()) hero.hconf--;
+  if (blind()) hero.hblnd--;
   if (hero.hhall > 0) hero.hhall--;
-  if (hero.hfast > 0) hero.hfast--;
-  if (hero.hslep > 0) hero.hslep--;
-  if (hero.hlevi > 0) hero.hlevi--;
+  if (veryFast()) hero.hfast--;
+  if (sleeping()) hero.hslep--;
+  if (levitating()) hero.hlevi--;
 
   if ( hasRing(1) > 0 && random(12) == 0) teleportHero();
 

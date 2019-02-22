@@ -323,10 +323,10 @@ void gameLoop() {
   }
 
   makeKnown();
-  if (hero.hblnd == 0) drawMap();
+  if (!blind()) drawMap();
   drawHero();
-  if (hero.hblnd == 0) drawThing();
-  if (hero.hblnd == 0) drawMonst();
+  if (!blind()) drawThing();
+  if (!blind()) drawMonst();
   if (ss == 1) {
     showStatus();
   }
@@ -343,14 +343,14 @@ void buildDungeon() {
 }
 
 void heroMove(byte dir) {
-  if (hero.hconf > 0) {
+  if (confused()) {
     dir = random(4) + 1;
   }
   char dx = (dir - 2) * (dir % 2);
   char dy = (dir - 3) * ((dir - 1) % 2);
   byte mm, r;
 
-  if (hero.hslep > 0) {
+  if (sleeping()) {
     dx = 0;
     dy = 0;
   }
@@ -364,7 +364,7 @@ void heroMove(byte dir) {
       }
       setActiveMessage(29);
 //      clearBuf();
-      if (hero.hlevi == 0) {
+      if (!levitating()) {
         checkThing(hero.hx, hero.hy);
         if(dungeon[hero.hx][hero.hy] >= 31 && dungeon[hero.hx][hero.hy] <= 106){
           dungeon[hero.hx][hero.hy] += 80;
@@ -383,7 +383,7 @@ void heroMove(byte dir) {
   }
   wakeUp();
   tweatHero();
-  if (hero.hfast > 0) {
+  if (veryFast()) {
     if (hero.ht % 2 == 0) {
       moveMonst();
     }

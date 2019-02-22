@@ -1,5 +1,5 @@
 void flashHero(){
-  if(hero.hblnd==0) {
+  if(!blind()) {
     drawMap();
     drawThing();
     drawMonst();
@@ -17,7 +17,7 @@ void flashHero(){
 }
 
 void flashMonst(byte num){
-  if(hero.hblnd==0) {
+  if(!blind()) {
     drawMap();
     drawThing();
     drawMonst();
@@ -26,11 +26,11 @@ void flashMonst(byte num){
 //  arduboy.fillRect(mx[num]*6+1, my[num]*8, 6,8,WHITE);
 //  font5x7.setTextColor(BLACK);
   locate(mx[num], my[num]);
-  if(hero.hblnd == 0 && bitRead(m1[num],6)==0){
+  if(!blind() && bitRead(m1[num],6)==0){
 //    font5x7.print((char)pgm_read_byte(mname+(ms[num] % 32)));
     font5x7.print('/');
   } else {
-    font5x7.print(' ');    
+    font5x7.print(' ');
   }
   arduboy.display();
   delay(100);
@@ -49,8 +49,8 @@ void initHero(){
 //    i4[i]=0;
   }
 
-  hero.hx = 0, hero.hy = 0, 
-  
+  hero.hx = 0, hero.hy = 0,
+
   hero.im = 5, hero.dlv = 1, hero.st = 16, hero.stm = 16, hero.lv = 1;
 
   hero.hconf = 0, hero.hblnd = 0, hero.hhall = 0, hero.hfast = 0, hero.hslep = 0;

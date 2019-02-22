@@ -123,7 +123,7 @@ void dropItem(byte x, byte y, byte st) {
         tng[t].i4 = inv[st].i4;
 */
         tng[t] = inv[st];
-        
+
         deleteItem(st);
       }
     }
@@ -156,7 +156,7 @@ void useItem(byte st) {
     itmToGitm(5, vari, 1);
 //    addBuf(gitm);
   } else if (kind == 6) {     //scroll
-    if (hero.hblnd == 0) {
+    if (!blind()) {
       bitWrite(tknow[1], vari, 1);
       inv[st].i1--;
       if (inv[st].i1 == 0) {
@@ -266,7 +266,7 @@ void throwItem(byte i) {    //i=pack num 0 to 19
 */
       ftng = inv[i];
       ftng.i1 = 1;
-      
+
       inv[i].i1--;
       if (inv[i].i1 == 0) {
         deleteItem(i);
@@ -428,7 +428,7 @@ void hitWand(byte vari, byte mon, byte x, byte y) {
 
 byte askDir() {
   arduboy.clear();
-  if (hero.hblnd == 0) {
+  if (!blind()) {
     drawMap();
     drawHero();
     drawThing();
@@ -441,10 +441,9 @@ byte askDir() {
   showMsg();
   arduboy.display();
   byte dir = inputWait();
-  if (hero.hconf == 0) {
-    return dir;
-  } else {
-    return random(4) + 1;
+  if (confused()) {
+    dir = random(4) + 1;
   }
+  return dir;
 }
 
