@@ -28,11 +28,11 @@ void allKnown() {
 }
 
 void makeKnown() {
-  if (dungeon[hero.hx][hero.hy] >= 1 && dungeon[hero.hx][hero.hy] <= 6 && isDark[dungeon[hero.hx][hero.hy] - 1] == 0 ) {
+  if (dungeon[hero.x][hero.y] >= 1 && dungeon[hero.x][hero.y] <= 6 && isDark[dungeon[hero.x][hero.y] - 1] == 0 ) {
     //  if (dungeon[x][y] >= 1 && dungeon[x][y] <= 6 ) {
     for (int i = 0; i < 21; i++) {
       for (int j = 0; j < 8; j++) {
-        if (dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy]) {
+        if (dungeon[i][j] % 10 == dungeon[hero.x][hero.y]) {
           //          known[i][j] = 1;
           setKnown(i, j);
         }
@@ -41,8 +41,8 @@ void makeKnown() {
   } else {
     for (int i = 0; i <= 2; i++) {
       for (int j = 0; j <= 2; j++) {
-        int tx = hero.hx + i - 1;
-        int ty = hero.hy + j - 1;
+        int tx = hero.x + i - 1;
+        int ty = hero.y + j - 1;
         if (tx >= 0 && tx <= 20 && ty >= 0 && ty <= 7) {
           //          known[tx][ty] = 1;
           setKnown(tx, ty);
@@ -70,11 +70,11 @@ void drawMap() {    //@Pharap's sharp eye
       if (getKnown(i, j) == 1) {
         if (dungeon[i][j] == 0) {
           c = ' '; //arduboy.print(F(" "));
-//        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
-//          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
+//        } else if (dungeon[i][j] >= 1 && dungeon[i][j] <= 6 && isDark[dungeon[hero.x][hero.y] % 10 - 1] == 0) {
+//          if ( dungeon[i][j] < 40 && dungeon[i][j] % 10 == dungeon[hero.x][hero.y] % 10 ) {
         } else if (((dungeon[i][j] >= 1 && dungeon[i][j] <= 6) || (dungeon[i][j] >= 31 && dungeon[i][j] <= 106))
-          && isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0) {
-          if ( dungeon[i][j] % 10 == dungeon[hero.hx][hero.hy] % 10 ) {
+          && isDark[dungeon[hero.x][hero.y] % 10 - 1] == 0) {
+          if ( dungeon[i][j] % 10 == dungeon[hero.x][hero.y] % 10 ) {
             c = '.'; //arduboy.print(F("."));
           } else {
             c = ' '; //arduboy.print(F(" "));
@@ -87,7 +87,7 @@ void drawMap() {    //@Pharap's sharp eye
           c = '+'; //arduboy.print(F("+"));
 
 //        } else if (dungeon[i][j] >= 31 && dungeon[i][j] <= 106) {
-//          if(dungeon[i][j]%10 == dungeon[hero.hx][hero.hy]%10){
+//          if(dungeon[i][j]%10 == dungeon[hero.x][hero.y]%10){
 //            c = '.'; //arduboy.print(F("t"));
 //          } else {
 //            c = ' ';
@@ -121,8 +121,8 @@ void drawHero() {     //@Pharap's sharp eye
   if (!blind()) {
     for (int i = 0; i <= 2; i++) {
       for (int j = 0; j <= 2; j++) {
-        int tx = hero.hx + i - 1;
-        int ty = hero.hy + j - 1;
+        int tx = hero.x + i - 1;
+        int ty = hero.y + j - 1;
         if ((dungeon[tx][ty] >= 1 && dungeon[tx][ty] <= 6) ||
           (dungeon[tx][ty] >= 31 && dungeon[tx][ty] <= 106) ) { // (tx >= 0 && tx <= 20 && ty >= 0 && ty <= 7)
           locate(tx, ty);
@@ -131,7 +131,7 @@ void drawHero() {     //@Pharap's sharp eye
       }
     }
   }
-  locate(hero.hx, hero.hy);
+  locate(hero.x, hero.y);
   font5x7.print('@');
 }
 
@@ -140,13 +140,13 @@ void drawMonst() {
   for (int i = 0; i < MMAX; i++) {
     if (ms[i] / 32 != 0) {
       if (hero.hmdet == 0) {
-        if (isDark[dungeon[hero.hx][hero.hy] % 10 - 1] == 0 && dungeon[hero.hx][hero.hy] != 8 &&
-            dungeon[hero.hx][hero.hy] % 10 == dungeon[mx[i]][my[i]] % 10) {
+        if (isDark[dungeon[hero.x][hero.y] % 10 - 1] == 0 && dungeon[hero.x][hero.y] != 8 &&
+            dungeon[hero.x][hero.y] % 10 == dungeon[mx[i]][my[i]] % 10) {
           locate(mx[i], my[i]);
           //        arduboy.print((char)(65 + i));
           drawMonstSub(i);
         }
-        if (abs(hero.hx - mx[i]) <= 1 && abs(hero.hy - my[i]) <= 1) {
+        if (abs(hero.x - mx[i]) <= 1 && abs(hero.y - my[i]) <= 1) {
           locate(mx[i], my[i]);
           drawMonstSub(i);
         }
@@ -161,7 +161,7 @@ void drawMonst() {
 
 void drawMonstSub(byte i) {
   if (bitRead(m1[i], 6) == 0 || hasRing(8) > 0 || hero.hisee == 1) {
-    if (hero.hhall > 0) {
+    if (hallucinating()) {
       if (ms[i] / 32 == 3) {
         font5x7.print((char)pgm_read_byte(tsym + random(9)));
       } else {
@@ -195,13 +195,13 @@ void moveMonst() {
       }
     } else {
       byte fly = bitRead(m1[i], 7) + 1;
-      if ( bitRead(m1[i], 2) == 0 || (bitRead(m1[i], 2) == 1 && hero.ht % 2 == 0)) {
+      if ( bitRead(m1[i], 2) == 0 || (bitRead(m1[i], 2) == 1 && hero.turns % 2 == 0)) {
         for (int tt = 0; tt < fly; tt++) {
           int r;  //= random(4);
           if (ms[i] / 32 >= 2 && ms[i] / 32 <= 6) {
             r = 5;
-          } else if (ms[i] % 32 == 21 && dungeon[hero.hx][hero.hy] != 8 &&
-                     dungeon[mx[i]][my[i]] % 10 == dungeon[hero.hx][hero.hy] % 10 && bitRead(m1[i], 3) == 1) {
+          } else if (ms[i] % 32 == 21 && dungeon[hero.x][hero.y] != 8 &&
+                     dungeon[mx[i]][my[i]] % 10 == dungeon[hero.x][hero.y] % 10 && bitRead(m1[i], 3) == 1) {
             flashHero();
             setActiveMessage(18);
             hero.hconf = 10;
@@ -209,7 +209,7 @@ void moveMonst() {
           } else if (ms[i] % 32 == 25 && canBless() > 0 && random(2) == 0) {
             flashHero();
             setActiveMessage(19);
-            byte dmg = random(22-hero.lv);
+            byte dmg = random(22-hero.level);
             charon(dmg,3);
 //            if( hero.hp > dmg ){
 //              hero.hp = hero.hp - dmg;
@@ -219,22 +219,22 @@ void moveMonst() {
             char d=1;
             if(ms[i]/32 == 7) d=-1;
 
-            if ( mx[i] > hero.hx && monst[mx[i] - d][my[i]] == 0
+            if ( mx[i] > hero.x && monst[mx[i] - d][my[i]] == 0
                 && dungeon[mx[i] - d][my[i]] >= 1 && dungeon[mx[i] - d][my[i]] <= 190) {
               r=2-d;
 //              r = 1;
 //              if(ms[i]/32 ==7) r=3;
-            } else if ( my[i] > hero.hy && monst[mx[i]][my[i] - d] == 0
+            } else if ( my[i] > hero.y && monst[mx[i]][my[i] - d] == 0
                        && dungeon[mx[i]][my[i] - d] >= 1 && dungeon[mx[i]][my[i] - d] <= 190) {
               r=3-d;
 //              r = 2;
 //              if(ms[i]/32 ==7) r=4;
-            } else if ( mx[i] < hero.hx && monst[mx[i] + d][my[i]] == 0
+            } else if ( mx[i] < hero.x && monst[mx[i] + d][my[i]] == 0
                        && dungeon[mx[i] + d][my[i]] >= 1 && dungeon[mx[i] + d][my[i]] <= 190) {
               r=2+d;
 //              r = 3;
 //              if(ms[i]/32 ==7) r=1;
-            } else if ( my[i] < hero.hy && monst[mx[i]][my[i] + d] == 0
+            } else if ( my[i] < hero.y && monst[mx[i]][my[i] + d] == 0
                        && dungeon[mx[i]][my[i] + d] >= 1 && dungeon[mx[i]][my[i] + d] <= 190) {
               r=3+d;
 //              r = 4;
@@ -253,7 +253,7 @@ void moveMonst() {
             case 2:
             case 3:
             case 4:
-              if (mx[i] + dx == hero.hx && my[i] + dy == hero.hy) {
+              if (mx[i] + dx == hero.x && my[i] + dy == hero.y) {
                 //            msgc = "Mon hit.";
                 if (tt == 0) hitHero(ms[i] % 32, i);
               } else if (ms[i]%32 != 15 &&
@@ -285,7 +285,7 @@ void placeMonst() {
       if (hasRoom[h] == 0) h++;
       mx[i] = roomSX[h] + random(roomEX[h] - roomSX[h] + 1);
       my[i] = roomSY[h] + random(roomEY[h] - roomSY[h] + 1);
-      if (mx[i] != hero.hx && my[i] != hero.hy && monst[mx[i]][my[i]] == 0) {
+      if (mx[i] != hero.x && my[i] != hero.y && monst[mx[i]][my[i]] == 0) {
         placeMonXY(i, mx[i], my[i]);
       } else {
         ms[i] = 0;
@@ -298,7 +298,7 @@ void placeMonst() {
 
 void generateMon(byte m) {
   byte stt, mon;
-  int hr = ((dungeon[hero.hx][hero.hy] - 1) % 10 - ((dungeon[hero.hx][hero.hy] - 1) % 10) % 2) / 2;
+  int hr = ((dungeon[hero.x][hero.y] - 1) % 10 - ((dungeon[hero.x][hero.y] - 1) % 10) % 2) / 2;
   //  int h = ((hr + random(2) + 1) % RMAX) * 2;
   int h = 0;
   if(isBigRoom==0) h=((hr + 1) % RMAX) * 2;
@@ -311,7 +311,7 @@ void generateMon(byte m) {
 }
 
 void placeMonXY( byte i, byte x, byte y) {
-  byte mon = randMonst(hero.dlv);
+  byte mon = randMonst(hero.dungeon_level);
   byte stt = initState(mon);
   ms[i] = stt * 32 + mon;
   mh[i] = pgm_read_byte(mstat[mon]);
@@ -322,7 +322,7 @@ void placeMonXY( byte i, byte x, byte y) {
 }
 
 void showMsg() {
-  if (hero.hy >= 4) {
+  if (hero.y >= 4) {
     locate(0, 0);
   } else {
     locate(0, 7);
@@ -341,7 +341,7 @@ void placeThing() {
     }
   }
 
-  if( hero.dlv % 3 ==0){
+  if( hero.dungeon_level % 3 ==0){
     for ( int i = 0; i < RMAX * 2; i++) {
       if (hasRoom[i] == 1) {
         byte ix = random(roomSX[i], roomEX[i] + 1);
@@ -351,7 +351,7 @@ void placeThing() {
     }
   }
 
-  if (hero.dlv >= adepth && inv[hero.im - 1].ii != 144) {
+  if (hero.dungeon_level >= adepth && inv[hero.itemCount - 1].ii != 144) {
     byte a = 0;
     if(isBigRoom==0) a=random(RMAX) * 2;
     if (hasRoom[a] == 0) a++;
@@ -384,7 +384,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
     switch (kind) {
       case 1: //gold
         tng[t].ii = 16;
-        tng[t].i1 = random(100) + hero.dlv;
+        tng[t].i1 = random(100) + hero.dungeon_level;
         break;
       case 2: //food
         if (random(5) == 0) {
@@ -487,12 +487,12 @@ void drawThing() {
       if (getKnown(i, j) == 1 && thing[i][j] != 0 ) {
         locate(i, j);
         byte type = tng[thing[i][j] - 1].ii / 16;
-        if (hero.hhall > 0) type = random(8) + 1;
+        if (hallucinating()) type = random(8) + 1;
         font5x7.print((char)pgm_read_byte(tsym + type - 1));
       }
     }
   }
-  locate(hero.hx, hero.hy);
+  locate(hero.x, hero.y);
   font5x7.print('@');
 }
 
@@ -524,13 +524,13 @@ void checkThing(byte x, byte y) {
 //    addBuf(gitm);
     byte done = 0;
     if (tng[thing[x][y] - 1].ii == 16) {
-      hero.au = hero.au + tng[thing[x][y] - 1].i1;
+      hero.gold = hero.gold + tng[thing[x][y] - 1].i1;
       deleteThing(thing[x][y] - 1);
       thing[x][y] = 0;
       done = 1;
     } else {
       if (bitRead(tng[thing[x][y] - 1].i4, 7) == 1 ) {
-        for (int i = 0; i < hero.im; i++) {
+        for (int i = 0; i < hero.itemCount; i++) {
           if (inv[i].ii == tng[thing[x][y] - 1].ii &&
               inv[i].i2 == tng[thing[x][y] - 1].i2 &&
               inv[i].i3 == tng[thing[x][y] - 1].i3 &&
@@ -543,21 +543,21 @@ void checkThing(byte x, byte y) {
         }
       }
       if (done == 0) {
-        if (hero.im == IMAX) {
+        if (hero.itemCount == IMAX) {
           setActiveMessage(2);
         } else {
 /*
-          inv[hero.im].ii = tng[thing[x][y] - 1].ii;
-          inv[hero.im].i1 = tng[thing[x][y] - 1].i1;
-          inv[hero.im].i2 = tng[thing[x][y] - 1].i2;
-          inv[hero.im].i3 = tng[thing[x][y] - 1].i3;
-          inv[hero.im].i4 = tng[thing[x][y] - 1].i4;
+          inv[hero.itemCount].ii = tng[thing[x][y] - 1].ii;
+          inv[hero.itemCount].i1 = tng[thing[x][y] - 1].i1;
+          inv[hero.itemCount].i2 = tng[thing[x][y] - 1].i2;
+          inv[hero.itemCount].i3 = tng[thing[x][y] - 1].i3;
+          inv[hero.itemCount].i4 = tng[thing[x][y] - 1].i4;
 */
-          inv[hero.im] = tng[thing[x][y]-1];
+          inv[hero.itemCount] = tng[thing[x][y]-1];
 
           deleteThing(thing[x][y] - 1);
           thing[x][y] = 0;
-          hero.im++;
+          hero.itemCount++;
           sortItem();
         }
       }
@@ -607,47 +607,47 @@ byte initState(byte mon) {
 }
 
 void tweatHero() {
-  hero.ht++;
-  if (hero.ex >= hero.nl && hero.lv < 21) {   //level up
+  hero.turns++;
+  if (hero.experience >= hero.exp_next_level && hero.level < 21) {   //level up
     setActiveMessage(6);
-    hero.lv++;
-    hero.nl = hero.nl * 2;
+    hero.level++;
+    hero.exp_next_level = hero.exp_next_level * 2;
     byte r2 = random(8) + 3;
     hero.hp = hero.hp + r2;
-    hero.hpm = hero.hpm + r2;
+    hero.maxHP = hero.maxHP + r2;
   }
-//  if ( hero.hp < hero.hpm && hero.ht % (22 - hero.lv) == 0) {
-  if ( hero.hp < hero.hpm && hero.ht % ((22 - hero.lv)/3+1) == 0) {
+//  if ( hero.hp < hero.maxHP && hero.turns % (22 - hero.level) == 0) {
+  if ( hero.hp < hero.maxHP && hero.turns % ((22 - hero.level)/3+1) == 0) {
     hero.hp = hero.hp + 1 + hasRing(2);
   }
   if (confused()) hero.hconf--;
   if (blind()) hero.hblnd--;
-  if (hero.hhall > 0) hero.hhall--;
+  if (hallucinating()) hero.hhall--;
   if (veryFast()) hero.hfast--;
   if (sleeping()) hero.hslep--;
   if (levitating()) hero.hlevi--;
 
   if ( hasRing(1) > 0 && random(12) == 0) teleportHero();
 
-  hero.hh = hero.hh - 1 + hasRing(3);
-  if (equip(7, 1) != 0 && hero.ht % 2 == 0) { //ring right
-    hero.hh--;
+  hero.hunger = hero.hunger - 1 + hasRing(3);
+  if (equip(7, 1) != 0 && hero.turns % 2 == 0) { //ring right
+    hero.hunger--;
   }
-  if (equip(7, 2) != 0 && hero.ht % 2 == 1) { //ring left
-    hero.hh--;
+  if (equip(7, 2) != 0 && hero.turns % 2 == 1) { //ring left
+    hero.hunger--;
   }
 
-//  if( hero.hh < 60 || hero.hp <= hero.hpm / 4) {
+//  if( hero.hunger < 60 || hero.hp <= hero.maxHP / 4) {
 //    arduboy.setRGBled(255,0,0);
 //  } else {
 //    arduboy.setRGBled(0,0,0);
 //  }
 
-  if( hero.hh < 60 || hero.hp <= hero.hpm / 4) {
+  if( hero.hunger < 60 || hero.hp <= hero.maxHP / 4) {
     setActiveMessage(30);
   }
 
-  if (hero.hh <= 0) {  //gashi
+  if (hero.hunger <= 0) {  //gashi
     death=0;
     gameState = gameover;
   }

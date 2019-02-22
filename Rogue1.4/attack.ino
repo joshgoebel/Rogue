@@ -7,12 +7,12 @@ void hitMonst(byte mm, byte r, char dx, char dy) { //mm=monst[x][y](1 to 16) r=k
     hdex = pgm_read_byte(wstat[inv[w - 1].ii % 16]) + inv[w - 1].i2;
     hdmg = pgm_read_byte(wstat[inv[w - 1].ii % 16 + 1]) + inv[w - 1].i3;
   }
-  byte prob = 40 + hdex * 3 + hero.lv * 2;
+  byte prob = 40 + hdex * 3 + hero.level * 2;
 
   if (rr < prob) {
     flashMonst(mm - 1);
-    dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(hero.st + hero.rstr) * 2 + hero.rdex + hero.lv + 1) / 2;
-    checkMonst(mm - 1, r, dmg, hero.hx+dx, hero.hy+dy);
+    dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(hero.strength + hero.ringStrength) * 2 + hero.ringDexterity + hero.level + 1) / 2;
+    checkMonst(mm - 1, r, dmg, hero.x+dx, hero.y+dy);
   }
 }
 
@@ -21,9 +21,9 @@ void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=va
     monst[x][y] = 0;
     ms[m] = 0;
     if(r>=22){
-      hero.ex = hero.ex + pgm_read_byte(mstat[r] + 4)*100;
+      hero.experience = hero.experience + pgm_read_byte(mstat[r] + 4)*100;
     } else {
-      hero.ex = hero.ex + pgm_read_byte(mstat[r] + 4);
+      hero.experience = hero.experience + pgm_read_byte(mstat[r] + 4);
     }
     if (r == 15) {
       hero.hheld = 0;
@@ -44,7 +44,7 @@ void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=va
 }
 
 void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
-  byte prob = pgm_read_byte(mstat[i] + 3) - hero.lv * 2 - hero.rdex * 2;
+  byte prob = pgm_read_byte(mstat[i] + 3) - hero.level * 2 - hero.ringDexterity * 2;
   byte rr = random(100);
   char dmg = 0;
   byte a = equip(4, 1);
@@ -92,19 +92,19 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       }
       break;
     case 6:     //R.snake
-      if (hero.st > 3 || hasRing(5) == 0) {
+      if (hero.strength > 3 || hasRing(5) == 0) {
         if (random(5) == 0) {
           hit = true; //flashHero();
           setActiveMessage(14);
-          hero.st--;
+          hero.strength--;
         }
       }
       break;
     case 9:     //Leprchaun
-      if ( hero.au > 50 && random(10) != 0 ) {
+      if ( hero.gold > 50 && random(10) != 0 ) {
         hit = true; //flashHero();
         setActiveMessage(15);
-        hero.au = hero.au - random(50);
+        hero.gold = hero.gold - random(50);
         ms[id] += 6*32;
       }
       break;
@@ -137,14 +137,14 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
       }
       break;
     case 17:    //Wraith
-      if (hero.lv > 5 && random(5) == 0) {
+      if (hero.level > 5 && random(5) == 0) {
         hit = true; //flashHero();
         setActiveMessage(20);
-        hero.nl = hero.nl / 2;
-        hero.ex = hero.nl - 1;
-        hero.lv--;
-        hero.hpm = hero.hpm - 3 - random(7);
-        if (hero.hp > hero.hpm) hero.hp = hero.hpm;
+        hero.exp_next_level = hero.exp_next_level / 2;
+        hero.experience = hero.exp_next_level - 1;
+        hero.level--;
+        hero.maxHP = hero.maxHP - 3 - random(7);
+        if (hero.hp > hero.maxHP) hero.hp = hero.maxHP;
       }
       break;
     case 22:    //Vampire
@@ -153,14 +153,14 @@ void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp e
         setActiveMessage(21);
         byte r = random(3);
         if (r % 2 == 0) {
-          if (hasRing(5) == 0 || hero.st > 5) {
-            hero.st--;
+          if (hasRing(5) == 0 || hero.strength > 5) {
+            hero.strength--;
           }
         }
         if (r > 0) {
           if (hero.hp > 9) {
             hero.hp--;
-            hero.hpm--;
+            hero.maxHP--;
           }
         }
       }

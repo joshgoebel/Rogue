@@ -204,7 +204,7 @@ byte randMonst(byte d) {
 void wakeUp() {
   for (int i = 0; i < 16; i++) {
     if (ms[i] / 32 == 2) {
-      if ((abs(mx[i] - hero.hx) + abs(my[i] - hero.hy)) <= 2) {
+      if ((abs(mx[i] - hero.x) + abs(my[i] - hero.y)) <= 2) {
         if (random(10) < 4 / (hasRing(0) + 1)) {
           ms[i] = 32 + ms[i] % 32;
         }
@@ -241,7 +241,7 @@ void deleteItem(byte i) {
   inv[i].i2 = 0;
   inv[i].i3 = 0;
   inv[i].i4 = 0;
-  hero.im--;
+  hero.itemCount--;
   sortItem();
 }
 
@@ -255,7 +255,7 @@ void throwItem(byte i) {    //i=pack num 0 to 19
       if ( equip(3, 1) != 0 && inv[equip(3, 1) - 1].ii % 16 == 3) {
         dest = checkHit(dir, 20);
       } else {
-        dest = checkHit(dir, hero.st / 2);
+        dest = checkHit(dir, hero.strength / 2);
       }
 /*
       ftng.ii = inv[i].ii;
@@ -286,7 +286,7 @@ void throwItem(byte i) {    //i=pack num 0 to 19
         }
         //        Serial.println((int)hdex);
         byte rr = random(100);
-        byte prob = 40 + hdex * 3 + hero.lv * 2;
+        byte prob = 40 + hdex * 3 + hero.level * 2;
         if ( inv[equip(3, 1) - 1].ii % 16 == ftng.ii % 16 || (ftng.ii == 3 * 16 + 5 && inv[equip(3, 1) - 1].ii % 16 == 3)) {
           prob = prob * 4 / 3;
         }
@@ -304,9 +304,9 @@ void throwItem(byte i) {    //i=pack num 0 to 19
             hitWand(ftng.ii % 16, mon, destx, desty);
           } else {
             if ( ftng.ii / 16 == 3) {
-              dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(hero.st + hero.rstr) * 2 + hero.rdex + hero.lv + 1) / 2;
+              dmg = (random(hdex, hdex * hdmg) * 2 + strToDmg(hero.strength + hero.ringStrength) * 2 + hero.ringDexterity + hero.level + 1) / 2;
             } else {
-              dmg = ( -2 + strToDmg(hero.st + hero.rstr) * 2 + hero.rdex + hero.lv + 1) / 2;
+              dmg = ( -2 + strToDmg(hero.strength + hero.ringStrength) * 2 + hero.ringDexterity + hero.level + 1) / 2;
             }
             if ( inv[equip(3, 1) - 1].ii % 16 == ftng.ii % 16 || (ftng.ii == 3 * 16 + 5 && inv[equip(3, 1) - 1].ii % 16 == 3)) {
               dmg = dmg * 4 / 3;
@@ -415,7 +415,7 @@ void hitWand(byte vari, byte mon, byte x, byte y) {
       break;
     case 7:     // missile
 //      mh[mon - 1] = mh[mon - 1] / 2;
-      dmg=hero.lv*5;
+      dmg=hero.level*5;
       checkMonst( mon-1, ms[mon-1]%32, dmg, x, y);
       break;
     case 8:

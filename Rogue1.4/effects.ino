@@ -17,3 +17,7 @@ bool veryFast() {
 bool levitating() {
     return hero.hlevi > 0;
 }
+
+bool hallucinating() {
+    return hero.hhall > 0;
+}

@@ -23,31 +23,31 @@ struct Score {        //my first 'structure'
 };
 
 typedef struct Hero {
-  byte hx;
-  byte hy;
-  byte im;
-  byte dlv;
-  byte st;
-  byte stm;
-  byte lv;
-  byte hconf;
-  byte hblnd;
-  byte hhall;
-  byte hfast;
-  byte hslep;
+  byte x;
+  byte y;
+  byte itemCount;
+  byte dungeon_level;
+  byte strength;
+  byte maxStrength;
+  byte level;
+  byte hconf; // confused
+  byte hblnd; // blind
+  byte hhall; // hallucination
+  byte hfast; // very fast
+  byte hslep; // sleeping
   byte hmdet;
   byte hisee;
-  byte hlevi;
+  byte hlevi; // levitating
   byte hheld;
-  char rdex;
-  char rstr;
-  long int au;
-  long int hp;
-  long int hpm;
-  long int ex;
-  long int ht;
-  long int hh;
-  long int nl;
+  char ringDexterity;
+  char ringStrength;
+  long int gold;
+  long int hp; // hit points
+  long int maxHP; // max hit points
+  long int experience;
+  long int turns;  // elasped turns, increases one tick per step
+  long int hunger; // 0 is starving
+  long int exp_next_level;
 } Hero;
 
 struct item {

@@ -45,7 +45,7 @@ void makeDungeon4() {
     hasRoom[i] = 0;
   }
 
-  if ( hero.dlv >=5 && random(20) == 0) {      //Big Room
+  if ( hero.dungeon_level >=5 && random(20) == 0) {      //Big Room
     isBigRoom = 1;
     hasRoom[0]=1;
     roomSX[0]=1;
@@ -140,7 +140,7 @@ void makeDungeon4() {
     }
   }
 
-  
+
   //階段をつくる
   int s = 0;
   if( isBigRoom==0 ) s = random(RMAX) * 2;

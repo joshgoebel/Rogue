@@ -51,7 +51,7 @@ void titleScreen() {
     if(EEPROM.read(20)==1){
       EEPROM.update(20,0);
       loadStatus();
-//      hero.dlv++;
+//      hero.dungeon_level++;
 //      buildDungeon();
       gameState = landing;
     }
@@ -61,7 +61,7 @@ void titleScreen() {
 void atLanding(){
   locate(5,2);
   font5x7.print(F("Next floor "));
-  font5x7.print(hero.dlv);
+  font5x7.print(hero.dungeon_level);
   locate(7,5);
   font5x7.print(F("A)Go Next"));
   locate(7,6);
@@ -86,8 +86,8 @@ void gameOver() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
-//  hero.hp = hero.hpm;
-//  hero.hh = 400;
+//  hero.hp = hero.maxHP;
+//  hero.hunger = 400;
   //  locate(7, 3);
   //  arduboy.print(F("R.I.P."));
   //  locate(7, 6);
@@ -135,9 +135,9 @@ void gameOver() {
     locate(11, 5);
     font5x7.print((char)pgm_read_byte(mname + death - 4));
   }
-  locate(11 - digits(hero.au), 6);
+  locate(11 - digits(hero.gold), 6);
   font5x7.print(F("$"));
-  font5x7.print(hero.au);
+  font5x7.print(hero.gold);
   if (arduboy.justPressed(A_BUTTON)) {
     rank = checkHiScore();
     gameState = score;
@@ -240,9 +240,9 @@ void showHighScores() {
 byte checkHiScore() {
   Score tglory;
   byte result = 0;
-  if (hero.dlv == 0) hero.dlv = 255;
-  if (glory[0].gold < hero.au) {
-    glory[0] = {hero.au, hero.dlv};
+  if (hero.dungeon_level == 0) hero.dungeon_level = 255;
+  if (glory[0].gold < hero.gold) {
+    glory[0] = {hero.gold, hero.dungeon_level};
     for (int i = 0; i < 5; ++i) {
       for (int j = i + 1; j < 5; ++j) {
         if ( glory[i].gold > glory[j].gold ) {
@@ -254,7 +254,7 @@ byte checkHiScore() {
     }
     saveHiScore();
     for (int i = 0; i < 5; i++) {
-      if (glory[i].gold == hero.au) {
+      if (glory[i].gold == hero.gold) {
         result = 5 - i;
       }
     }
@@ -289,15 +289,15 @@ void gameLoop() {
     if (ss == 1) {
       ss = 0;
     } else {
-      if (dungeon[hero.hx][hero.hy] >= 11 && dungeon[hero.hx][hero.hy] <= 16 && hero.hheld == 0) {
+      if (dungeon[hero.x][hero.y] >= 11 && dungeon[hero.x][hero.y] <= 16 && hero.hheld == 0) {
         hero.hmdet = 0;
         hero.hisee = 0;
-        if (inv[hero.im - 1].ii == 144) {
-          hero.dlv--;
+        if (inv[hero.itemCount - 1].ii == 144) {
+          hero.dungeon_level--;
         } else {
-          hero.dlv++;
+          hero.dungeon_level++;
         }
-        if (hero.dlv == 0) {
+        if (hero.dungeon_level == 0) {
           gameState = winner;
         } else {
           gameState = landing;
@@ -355,27 +355,27 @@ void heroMove(byte dir) {
     dy = 0;
   }
   ss = 0;
-  if (monst[hero.hx + dx][hero.hy + dy] == 0) {
-    if ((hero.hy + dy) <= 7 && (hero.hy + dy) >= 0 && (hero.hx + dx) >= 0 && (hero.hx + dx) <= 20
-        && dungeon[hero.hx + dx][hero.hy + dy] >= 1 && dungeon[hero.hx + dx][hero.hy + dy] <= 200) {
+  if (monst[hero.x + dx][hero.y + dy] == 0) {
+    if ((hero.y + dy) <= 7 && (hero.y + dy) >= 0 && (hero.x + dx) >= 0 && (hero.x + dx) <= 20
+        && dungeon[hero.x + dx][hero.y + dy] >= 1 && dungeon[hero.x + dx][hero.y + dy] <= 200) {
       if (hero.hheld == 0) {
-        hero.hx = hero.hx + dx;
-        hero.hy = hero.hy + dy;
+        hero.x = hero.x + dx;
+        hero.y = hero.y + dy;
       }
       setActiveMessage(29);
 //      clearBuf();
       if (!levitating()) {
-        checkThing(hero.hx, hero.hy);
-        if(dungeon[hero.hx][hero.hy] >= 31 && dungeon[hero.hx][hero.hy] <= 106){
-          dungeon[hero.hx][hero.hy] += 80;
+        checkThing(hero.x, hero.y);
+        if(dungeon[hero.x][hero.y] >= 31 && dungeon[hero.x][hero.y] <= 106){
+          dungeon[hero.x][hero.y] += 80;
         }
-        if(dungeon[hero.hx][hero.hy] >= 111 && dungeon[hero.hx][hero.hy] <= 186){
-          traped( dungeon[hero.hx][hero.hy]/10-11 );
+        if(dungeon[hero.x][hero.y] >= 111 && dungeon[hero.x][hero.y] <= 186){
+          traped( dungeon[hero.x][hero.y]/10-11 );
         }
       }
     }
   } else {
-    mm = monst[hero.hx + dx][hero.hy + dy];
+    mm = monst[hero.x + dx][hero.y + dy];
     r = ms[mm - 1] % 32;
     setActiveMessage(29);
 //    clearBuf();
@@ -384,7 +384,7 @@ void heroMove(byte dir) {
   wakeUp();
   tweatHero();
   if (veryFast()) {
-    if (hero.ht % 2 == 0) {
+    if (hero.turns % 2 == 0) {
       moveMonst();
     }
   } else {
@@ -401,7 +401,7 @@ void traped(byte vari){
 
     switch (vari){
       case 0:     //door
-        hero.dlv++;
+        hero.dungeon_level++;
         buildDungeon();
         break;
       case 1:     //arrow
@@ -415,7 +415,7 @@ void traped(byte vari){
         teleportHero();
         break;
       case 4:     //poison
-        if (hero.st > 3 || hasRing(5) == 0) hero.st--;
+        if (hero.strength > 3 || hasRing(5) == 0) hero.strength--;
         break;
       case 5:     //rust
         byte eq = equip(4, 1);

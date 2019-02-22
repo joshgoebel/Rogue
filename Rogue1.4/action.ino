@@ -9,7 +9,7 @@ void eat(byte r) {
 */
     setActiveMessage(8);
 //    hh = hh / 3 + 900 + random(200);
-    hero.hh = hero.hh / 3 + 350 + random(50);
+    hero.hunger = hero.hunger / 3 + 350 + random(50);
 //  }
 }
 
@@ -51,10 +51,10 @@ void wield(byte r) {
 void ringPut(byte r, char i) {
   switch (ttab[2][inv[r].ii % 16]) {
     case 4:
-      hero.rstr = hero.rstr + inv[r].i2 * i;
+      hero.ringStrength = hero.ringStrength + inv[r].i2 * i;
       break;
     case 6:
-      hero.rdex = hero.rdex + inv[r].i2 * i;
+      hero.ringDexterity = hero.ringDexterity + inv[r].i2 * i;
       break;
   }
 }
@@ -62,38 +62,38 @@ void ringPut(byte r, char i) {
 void drink(byte r) {
   switch (ttab[0][r]) {
     case 0:       //power
-      if (hero.st == hero.stm) {      //@Pharap's sharp eye
-        hero.st++;
-        hero.stm++;
+      if (hero.strength == hero.maxStrength) {      //@Pharap's sharp eye
+        hero.strength++;
+        hero.maxStrength++;
       } else {
-        hero.st++;
+        hero.strength++;
       }
       break;
     case 1:       //restore
-      hero.st = hero.stm;
+      hero.strength = hero.maxStrength;
       break;
     case 2:       //heal
-      if (hero.hp == hero.hpm) {
+      if (hero.hp == hero.maxHP) {
         hero.hp++;
-        hero.hpm++;
+        hero.maxHP++;
       } else {
-        hero.hp = (hero.hpm + hero.hp) / 2;
+        hero.hp = (hero.maxHP + hero.hp) / 2;
       }
       break;
     case 3:       //e.heal
-      if (hero.hp == hero.hpm) {
+      if (hero.hp == hero.maxHP) {
         hero.hp = hero.hp + 2;
-        hero.hpm = hero.hpm + 2;
+        hero.maxHP = hero.maxHP + 2;
       } else {
-        hero.hp = hero.hpm;
+        hero.hp = hero.maxHP;
       }
       break;
     case 4:       //poison
-      if (hero.st > 3) hero.st = hero.st - random(3) - 1;
+      if (hero.strength > 3) hero.strength = hero.strength - random(3) - 1;
       hero.hhall = 0;
       break;
     case 5:       //level
-      hero.ex = hero.nl;
+      hero.experience = hero.exp_next_level;
       break;
     case 6:       //blind
       hero.hblnd = 50;
@@ -140,7 +140,7 @@ void readScroll(byte r) {
     case 1:       //hold
       for (int x = -2; x <= 2; x++) {
         for (int y = -2; y <= 2; y++) {
-          st = monst[hero.hx + x][hero.hy + y];
+          st = monst[hero.x + x][hero.y + y];
           if (st != 0 ) ms[st - 1] = 4 * 32 + ms[st - 1] % 32;
         }
       }
@@ -190,7 +190,7 @@ void readScroll(byte r) {
     case 7:       //scare
       break;
     case 8:       //bless
-      for (int i = 0; i < hero.im; i++) {
+      for (int i = 0; i < hero.itemCount; i++) {
         bitWrite(inv[i].i4, 6, 0);
       }
       break;
@@ -200,13 +200,13 @@ void readScroll(byte r) {
           st = i + 1;
         }
       }
-      fp = findPlace(hero.hx, hero.hy, 1);
+      fp = findPlace(hero.x, hero.y, 1);
       if (st != 0 && fp != 0) {
         dx = (fp - 1) % 3 - 1;
         dy = (fp - 1) / 3 - 1;
-        mx[st - 1] = hero.hx + dx;
-        my[st - 1] = hero.hy + dy;
-        placeMonXY( st - 1 , hero.hx + dx, hero.hy + dy );
+        mx[st - 1] = hero.x + dx;
+        my[st - 1] = hero.y + dy;
+        placeMonXY( st - 1 , hero.x + dx, hero.y + dy );
         drawMonst();
       }
       break;
@@ -271,7 +271,7 @@ int checkHit(byte dir, byte str) {
   char dy = (dir - 3) * ((dir - 1) % 2);
   byte ex = 0, i = 0;
   byte mon = 0;
-  byte x = hero.hx, y = hero.hy;
+  byte x = hero.x, y = hero.y;
   do {
     if (monst[x + dx][y + dy] != 0) {
       mon = monst[x + dx][y + dy];
@@ -293,7 +293,7 @@ int checkHit(byte dir, byte str) {
 byte findPlace(byte x, byte y, byte tm) {   //tm=0:thing, 1:monst
   byte result = 0;
   byte ex = 0, i = 0, r = random(8);
-  monst[hero.hx][hero.hy] = 255;
+  monst[hero.x][hero.y] = 255;
   do {
     char st = (i + r) % 9;
     char dx = st % 3 - 1;
@@ -309,7 +309,7 @@ byte findPlace(byte x, byte y, byte tm) {   //tm=0:thing, 1:monst
       }
     }
   } while (ex == 0);
-  monst[hero.hx][hero.hy] = 0;
+  monst[hero.x][hero.y] = 0;
   return result;
 }
 

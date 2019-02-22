@@ -26,7 +26,7 @@ void drawInventry(byte st, byte mode) {
 //    arduboy.fillRect(0,0,128,8,WHITE);
 //    font5x7.setTextColor(BLACK);
     font5x7.print(F("[Inventory]    "));
-    font5x7.print( hero.hh );
+    font5x7.print( hero.hunger );
     font5x7.print(F("  "));
   } else {
     font5x7.print(F(" which?"));
@@ -36,8 +36,8 @@ void drawInventry(byte st, byte mode) {
 //  font5x7.setTextColor(WHITE);
   font5x7.print('>');
 
-  if (st + 7 > hero.im) {
-    ed = hero.im;
+  if (st + 7 > hero.itemCount) {
+    ed = hero.itemCount;
   } else {
     ed = st + 7;
   }
@@ -101,7 +101,7 @@ byte inventry(byte mode) {
       if (st > 0) st--;
     }
     if (a == 4) {
-      if (st < hero.im - 1) st++;
+      if (st < hero.itemCount - 1) st++;
     }
     if (a == 5) {
       if(mode==0){
@@ -189,7 +189,7 @@ byte action(byte st) {
           ex=1;
         } else if(curs==2){
           if(!sleeping()){
-            dropItem(hero.hx, hero.hy, st);
+            dropItem(hero.x, hero.y, st);
             sortItem();
             moveMonst();
             tweatHero();
@@ -214,7 +214,7 @@ byte action(byte st) {
 
 void showStatus() {
   byte h = 0;
-  if (hero.hx < 10) {
+  if (hero.x < 10) {
     h = 11;
   }
   if(!blind()) drawMap();
@@ -235,20 +235,20 @@ void showStatus() {
   }
   locate(h, 1);
   font5x7.print(F("Lv:"));
-  font5x7.print(hero.dlv);
+  font5x7.print(hero.dungeon_level);
   locate(h, 2);
   font5x7.print(F("Au:"));
-  font5x7.print(hero.au);
+  font5x7.print(hero.gold);
   locate(h, 3);
   font5x7.print(F("Hp:"));
   font5x7.print(hero.hp);
   font5x7.print('/');
-  font5x7.print(hero.hpm);
+  font5x7.print(hero.maxHP);
   locate(h, 4);
   font5x7.print(F("St:"));
-  font5x7.print(hero.st);
+  font5x7.print(hero.strength);
   font5x7.print('/');
-  font5x7.print(hero.stm);
+  font5x7.print(hero.maxStrength);
   locate(h, 5);
   font5x7.print(F("AC:"));
   byte a=equip(4,1);
@@ -261,15 +261,15 @@ void showStatus() {
   font5x7.print((int)ac);
   locate(h, 6);
   font5x7.print(F("Ex:"));
-  font5x7.print(hero.lv);
+  font5x7.print(hero.level);
   font5x7.print('/');
   locate(h + 3, 7);
-  font5x7.print(hero.ex);
+  font5x7.print(hero.experience);
 }
 
 void search() {
-  for (int i = hero.hx - 1; i <= hero.hx + 1; i++) {
-    for (int j = hero.hy - 1; j <= hero.hy + 1; j++) {
+  for (int i = hero.x - 1; i <= hero.x + 1; i++) {
+    for (int j = hero.y - 1; j <= hero.y + 1; j++) {
       if (dungeon[i][j] >= 31 && dungeon[i][j] <= 106) {
         dungeon[i][j] = dungeon[i][j] + 80;
       } else if (dungeon[i][j] >= 221 && dungeon[i][j] <= 226) {

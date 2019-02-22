@@ -10,7 +10,7 @@ void makeDungeon2() {
   for(int i=0; i<6; i++){
     hasRoom[i]=0;
   }
-//縦に３分割する  
+//縦に３分割する
   for (int i = 0; i < 7; i++) {
     int r = random(3);
     switch (r) {
@@ -244,7 +244,7 @@ void makeDungeon2() {
       }
     }
   }
-  
+
 //階段をつくる
   int s=random(3)*2;
   if(hasRoom[s]==0) s++;
@@ -273,11 +273,11 @@ void teleportHero(){
   int h=0;
   if(isBigRoom==0) h=random(RMAX)*2;
   if(hasRoom[h]==0) h++;
-  hero.hx=roomSX[h]+random(roomEX[h]-roomSX[h]+1);
-  hero.hy=roomSY[h]+random(roomEY[h]-roomSY[h]+1);
-  if(monst[hero.hx][hero.hy] != 0){
-    ms[monst[hero.hx][hero.hy]-1]=0;
-    monst[hero.hx][hero.hy]=0;
+  hero.x=roomSX[h]+random(roomEX[h]-roomSX[h]+1);
+  hero.y=roomSY[h]+random(roomEY[h]-roomSY[h]+1);
+  if(monst[hero.x][hero.y] != 0){
+    ms[monst[hero.x][hero.y]-1]=0;
+    monst[hero.x][hero.y]=0;
   }
 }
 
