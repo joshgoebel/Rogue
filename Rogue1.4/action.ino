@@ -130,7 +130,7 @@ void drink(byte r) {
 }
 
 void readScroll(byte r) {
-  byte ex = 0, i = 0, st, dx, dy;
+  byte ex = 0, i = 0, st = 0, dx, dy;
   int fp;
   switch (ttab[1][r]) {
     case 0:       //protect

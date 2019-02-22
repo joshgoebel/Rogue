@@ -214,7 +214,7 @@ void wakeUp() {
 }
 
 byte strToDmg(byte str) {
-  byte result;
+  byte result = 0;
   if (str >= 1 && str <= 5) {
     result = str - 5;
   } else if (str >= 6 && str <= 14) {

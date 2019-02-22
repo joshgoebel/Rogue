@@ -197,7 +197,7 @@ void moveMonst() {
       byte fly = bitRead(m1[i], 7) + 1;
       if ( bitRead(m1[i], 2) == 0 || (bitRead(m1[i], 2) == 1 && hero.turns % 2 == 0)) {
         for (int tt = 0; tt < fly; tt++) {
-          int r;  //= random(4);
+          int r = 0;  //= random(4);
           if (ms[i] / 32 >= 2 && ms[i] / 32 <= 6) {
             r = 5;
           } else if (ms[i] % 32 == 21 && dungeon[hero.x][hero.y] != 8 &&
@@ -503,7 +503,7 @@ void checkThing(byte x, byte y) {
   } else {
     byte type = tng[thing[x][y] - 1].ii / 16;
     byte r = tng[thing[x][y] - 1].ii % 16;
-    byte k;
+    byte k = 0;
 
     switch (type) {
       case 1:
@@ -574,7 +574,7 @@ void deleteThing(byte i) {
 }
 
 byte initState(byte mon) {
-  byte result;
+  byte result = 1;
   byte state = pgm_read_byte(mstat[mon] + 6) % 16;
   switch (state) {
     case 1:
