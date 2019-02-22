@@ -20,13 +20,13 @@ DEBUG_STORAGE void wield(byte r) {
     } else {
       bitWrite(inv[r].i4, 4, 0);
       setActiveMessage(10);           //remove
-      if (inv[r].ii / 16 == 7) ringPut(r, -1);
+      if (itemType(inv[r]) == 7) ringPut(r, -1);
     }
   } else {
-    switch (inv[r].ii / 16) {
+    switch (itemType(inv[r])) {
       case 3:
       case 4:
-        if (equip(inv[r].ii / 16, 1) != 0) {
+        if (equip(itemType(inv[r]), 1) != 0) {
           setActiveMessage(12);       //already wield
         } else {
           bitWrite(inv[r].i4, 1, 1);
@@ -49,7 +49,7 @@ DEBUG_STORAGE void wield(byte r) {
 }
 
 DEBUG_STORAGE void ringPut(byte r, char i) {
-  switch (ttab[2][inv[r].ii % 16]) {
+  switch (ttab[2][itemVariant(inv[r])]) {
     case 4:
       hero.ringStrength = hero.ringStrength + inv[r].i2 * i;
       break;
@@ -172,13 +172,13 @@ DEBUG_STORAGE void readScroll(byte r) {
       st = inventry(1);
       bitWrite(inv[st].i4, 1, 1);   //add known2
       bitWrite(inv[st].i4, 5, 1);   //add known
-      if (inv[st].ii / 16 >= 5) bitWrite(tknow[inv[st].ii / 16 - 5], inv[st].ii % 16, 1);
-      if (inv[st].ii / 16 < 5 || inv[st].ii / 16 == 9) {
-        itmToGitm(inv[st].ii / 16, inv[st].ii % 16, 0);
+      if (itemType(inv[st]) >= 5) bitWrite(tknow[itemType(inv[st]) - 5], itemVariant(inv[st]), 1);
+      if (itemType(inv[st]) < 5 || itemType(inv[st]) == 9) {
+        itmToGitm(itemType(inv[st]), itemVariant(inv[st]), 0);
       } else {
-        itmToGitm(inv[st].ii / 16, inv[st].ii % 16, 1);
+        itmToGitm(itemType(inv[st]), itemVariant(inv[st]), 1);
       }
-      //      itmToGitm(inv[st].ii / 16, inv[st].ii % 16, 1);
+      //      itmToGitm(itemType(inv[st]), itemVariant(inv[st]), 1);
 //      addBuf(gitm);
       break;
     case 5:       //telport
@@ -242,7 +242,7 @@ DEBUG_STORAGE void zap(byte vari) {
 DEBUG_STORAGE byte equip(byte type, byte n) {     //type=3(weapon),4(armor),7(ring), n=1 or 2(for ring)...rtab[equip(7,2)]
   byte result = 0;
   for (int i = 0; i < 20; i++) {
-    if (inv[i].ii / 16 == type) {
+    if (itemType(inv[i]) == type) {
       if (bitRead(inv[i].i4, 4) == 1) {
         n--;
         if (n == 0) {

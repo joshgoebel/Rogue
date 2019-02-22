@@ -134,8 +134,8 @@ DEBUG_STORAGE void dropItem(byte x, byte y, byte st) {
 }
 
 DEBUG_STORAGE void useItem(byte st) {
-  byte kind = inv[st].ii / 16;
-  byte vari = inv[st].ii % 16;
+  byte kind = itemType(inv[st]);
+  byte vari = itemVariant(inv[st]);
   //  if (hslep == 0) {
   if (kind == 2) {            //food
     inv[st].i1--;
@@ -249,9 +249,9 @@ DEBUG_STORAGE void deleteItem(byte i) {
 DEBUG_STORAGE void throwItem(byte i) {    //i=pack num 0 to 19
   char hdex = 0, hdmg = 0, dmg = 0;
   int dest = 0;
-  if (bitRead(inv[i].i4, 4) == 0 || (inv[i].ii / 16 == 3 && inv[i].ii % 16 >= 4)) {
+  if (bitRead(inv[i].i4, 4) == 0 || (itemType(inv[i]) == 3 && itemVariant(inv[i]) >= 4)) {
     //    if (bitRead(inv[i].i4, 4) == 0 && bitRead(inv[i].i4, 6) == 0) {
-    if ( bitRead(inv[i].i4, 6) == 0 || (bitRead(inv[i].i4, 6) == 1 && inv[i].ii / 16 != 3)) {
+    if ( bitRead(inv[i].i4, 6) == 0 || (bitRead(inv[i].i4, 6) == 1 && itemType(inv[i]) != 3)) {
       byte dir = askDir();
       if ( equip(3, 1) != 0 && inv[equip(3, 1) - 1].ii % 16 == 3) {
         dest = checkHit(dir, 20);

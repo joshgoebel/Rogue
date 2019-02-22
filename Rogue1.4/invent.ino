@@ -1,6 +1,14 @@
 #include "strings.h"
 #include "FlashStringHelper.h"
 
+byte itemType(item &it) {
+  return it.ii / 16;
+}
+
+byte itemVariant(item &it) {
+  return it.ii % 16;
+}
+
 DEBUG_STORAGE byte inputWait() {
   byte result = 0;
   do {
@@ -47,7 +55,7 @@ DEBUG_STORAGE void drawInventry(byte st, byte mode) {
     if(bitRead(inv[i].i4,3)==1){
       buff='{';
     } else {
-      buff = pgm_read_byte(tsym + inv[i].ii / 16 - 1);
+      buff = pgm_read_byte(tsym + itemType(inv[i]) - 1);
     }
     font5x7.print(buff);
     font5x7.print(' ');
@@ -56,24 +64,24 @@ DEBUG_STORAGE void drawInventry(byte st, byte mode) {
         font5x7.print(inv[i].i1);
         font5x7.print(' ');
     }
-    if(inv[i].ii/16<5){
-      itmToGitm(inv[i].ii/16,inv[i].ii%16,0);
+    if(itemType(inv[i])<5){
+      itmToGitm(itemType(inv[i]),itemVariant(inv[i]),0);
     } else {
-      itmToGitm(inv[i].ii/16,inv[i].ii%16,bitRead(tknow[inv[i].ii/16-5],inv[i].ii%16));
+      itmToGitm(itemType(inv[i]),itemVariant(inv[i]),bitRead(tknow[itemType(inv[i])-5],itemVariant(inv[i])));
     }
     font5x7.print(activeMessage);
     if(bitRead(inv[i].i4,5)==1){
-      if(inv[i].ii/16 == 3){           //weapon
+      if(itemType(inv[i]) == 3){           //weapon
         font5x7.print('[');
         font5x7.print((int)inv[i].i2);
         font5x7.print(',');
         font5x7.print((int)inv[i].i3);
         font5x7.print(']');
-      } else if(inv[i].ii/16 == 4 || inv[i].ii/16 == 8){      //armor or ring
+      } else if(itemType(inv[i]) == 4 || itemType(inv[i]) == 8){      //armor or ring
         font5x7.print('[');
         font5x7.print((int)inv[i].i2);
         font5x7.print(']');
-      } else if(inv[i].ii/16 == 7){
+      } else if(itemType(inv[i]) == 7){
         if(inv[i].i2 != 0){
           font5x7.print('[');
           font5x7.print((int)inv[i].i2);
