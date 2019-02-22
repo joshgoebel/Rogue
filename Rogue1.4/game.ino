@@ -1,4 +1,4 @@
-void title() {
+void titleScreen() {
 //  arduboy.setRGBled(0, 0, 0);
   locate(1, 2);
   font5x7.print(F("[@ ~]$ Rogue"));
@@ -14,7 +14,7 @@ void title() {
     locate(13, 2);
     font5x7.print(' ');
   }
-*/  
+*/
   if (wiz == 1) {
     locate(0, 7);
     font5x7.print(adepth);
@@ -45,7 +45,7 @@ void title() {
     //    mess(0);
     //    addBuf( dlv );
 //    welc = 1;
-    gstate = 1;
+    gameState = gameloop;
   }
   if (arduboy.justPressed(B_BUTTON) ){ //&& welc == 1) {
     if(EEPROM.read(20)==1){
@@ -53,12 +53,12 @@ void title() {
       loadStatus();
 //      hero.dlv++;
 //      buildDungeon();
-      gstate = 5;
+      gameState = landing;
     }
   }
 }
 
-void landing(){
+void atLanding(){
   locate(5,2);
   font5x7.print(F("Next floor "));
   font5x7.print(hero.dlv);
@@ -70,7 +70,7 @@ void landing(){
   if (arduboy.justPressed(A_BUTTON) ) {
     setActiveMessage(29);
     buildDungeon();
-    gstate = 1;
+    gameState = gameloop;
   }
 
   if (arduboy.justPressed(B_BUTTON) ) {
@@ -78,11 +78,11 @@ void landing(){
     saveStatus();
     wiz=0;
     adepth=26;
-    gstate = 0;
+    gameState = title;
   }
 }
 
-void gameover() {
+void gameOver() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -125,7 +125,7 @@ void gameover() {
     locate(8, 5);
     font5x7.print(F("luck"));
   } else if(death==3){
-    locate(7, 4);    
+    locate(7, 4);
     font5x7.print(F("hellfire"));
   } else {
     locate(7, 4);
@@ -140,7 +140,7 @@ void gameover() {
   font5x7.print(hero.au);
   if (arduboy.justPressed(A_BUTTON)) {
     rank = checkHiScore();
-    gstate = 4;
+    gameState = score;
   }
 }
 
@@ -153,7 +153,7 @@ byte digits(long int num) {
   return ans;
 }
 
-void winner() {
+void gameWinner() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -186,11 +186,11 @@ void winner() {
 
   if (arduboy.justPressed(A_BUTTON)) {
     rank = checkHiScore();
-    gstate = 4;
+    gameState = score;
   }
 }
 
-void score() {
+void showHighScores() {
 
   //  byte rank = checkHiScore();
 
@@ -229,18 +229,16 @@ void score() {
 //  font5x7.setTextColor(WHITE);
 
   if (arduboy.justPressed(A_BUTTON)) {
-    gstate = 0;
+    gameState = title;
   }
   if (arduboy.justPressed(B_BUTTON)) {
-    for (int i = 0; i < 5; i++) {
-      glory[i] = {0, 0};
-    }
     clearHiScore();
   }
 
 }
 
 byte checkHiScore() {
+  Score tglory;
   byte result = 0;
   if (hero.dlv == 0) hero.dlv = 255;
   if (glory[0].gold < hero.au) {
@@ -264,7 +262,7 @@ byte checkHiScore() {
   return result;
 }
 
-void gameloop() {
+void gameLoop() {
   byte mm, r;
 
   if (arduboy.justPressed(LEFT_BUTTON)) {
@@ -300,11 +298,11 @@ void gameloop() {
           hero.dlv++;
         }
         if (hero.dlv == 0) {
-          gstate = 3;
+          gameState = winner;
         } else {
-          gstate = 5;
+          gameState = landing;
         }
-//        gstate=5;
+//        gameState = landing;
 //        buildDungeon();
       } else {
         //      ss = 1;
@@ -400,7 +398,7 @@ void traped(byte vari){
   byte dmg=0;
   if(random(2)==0){
     flashHero();
-  
+
     switch (vari){
       case 0:     //door
         hero.dlv++;
@@ -439,7 +437,7 @@ void traped(byte vari){
 void charon(byte dmg, byte reason){
   if( hero.hp <= dmg ) {
     death = reason;
-    gstate = 2;
+    gameState = gameover;
   } else {
     hero.hp=hero.hp-dmg;
   }

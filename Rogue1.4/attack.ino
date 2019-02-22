@@ -60,17 +60,17 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
     if(dmg<0) dmg=0;
 //    if (hero.hp <= dmg) {
 //      death=i+2;
-//      gstate = 2;
+//      gameState = gameover;
 //    } else {
 //      flashHero();
 //      hero.hp = hero.hp - dmg;
     flashHero();
-    charon(dmg, i+4); 
+    charon(dmg, i+4);
       if (bitRead(m1[r], 3) == 1) {
         specialAttack( i ,r );
 //      }
     }
-  } 
+  }
 }
 
 void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp eye
