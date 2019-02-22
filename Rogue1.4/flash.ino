@@ -39,26 +39,23 @@ DEBUG_STORAGE void flashMonst(byte num){
 }
 
 DEBUG_STORAGE void initHero(){
-
-  for(int i=0; i<maxItems; i++){
+  for(byte i=0; i<maxItems; i++){
     deleteItem(i);
-//    ii[i]=0;
-//    i1[i]=0;
-//    i2[i]=0;
-//    i3[i]=0;
-//    i4[i]=0;
   }
+  memset(&hero, 0, sizeof(hero));
 
-  hero.x = 0, hero.y = 0,
+  hero.level = 1;
+  hero.dungeon_level = 1, hero.strength = 16, hero.maxStrength = hero.strength;
 
-  hero.itemCount = 5, hero.dungeon_level = 1, hero.strength = 16, hero.maxStrength = 16, hero.level = 1;
+  // all status effects start at 0 by default - confusion, blindness, etc.
 
-  hero.hconf = 0, hero.hblnd = 0, hero.hhall = 0, hero.hfast = 0, hero.hslep = 0;
-  hero.hmdet = 0, hero.hisee = 0, hero.hlevi = 0, hero.hheld = 0;
-  hero.ringDexterity = 0, hero.ringStrength = 0;
+  // gold = 0
+  // turns = 0
+  // experience = 0
 
-  hero.gold = 0, hero.hp = 16, hero.maxHP = 16, hero.experience = 0, hero.turns = 0, hero.hunger = 400, hero.exp_next_level = 10;
+  hero.hp = 16, hero.maxHP = hero.hp, hero.hunger = 400, hero.exp_next_level = 10;
 
+  hero.itemCount = 5;
   inv[0].ii = 2 * 16 + 0; inv[0].i1 =  1; inv[0].i2 = 0; inv[0].i3 = 0; inv[0].i4 = 0b10000000;
   inv[1].ii = 3 * 16 + 0; inv[1].i1 =  1; inv[1].i2 = 1; inv[1].i3 = 1; inv[1].i4 = 0b00110000;
   inv[2].ii = 3 * 16 + 3; inv[2].i1 =  1; inv[2].i2 = 1; inv[2].i3 = 0; inv[2].i4 = 0b00100000;
