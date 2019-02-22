@@ -195,7 +195,7 @@ void readScroll(byte r) {
       }
       break;
     case 9:       //create
-      for (int i = 0; i < MMAX; i++) {
+      for (int i = 0; i < maxMonsters; i++) {
         if (ms[i] == 0) {
           st = i + 1;
         }

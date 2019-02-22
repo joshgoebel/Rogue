@@ -35,7 +35,7 @@ byte freeSlot() {
       done = 1;
     } else {
       count++;
-      if (count == TMAX) {
+      if (count == maxThings) {
         done = 1;
       }
     }
@@ -45,24 +45,24 @@ byte freeSlot() {
 */
 
 byte freeSlot() {
-  for (uint8_t index = 0; index < TMAX; ++index) {
+  for (uint8_t index = 0; index < maxThings; ++index) {
     if(tng[index].ii == 0) {
       return index;
     }
   }
-  return TMAX;
+  return maxThings;
 }
 
 byte sortItem() {
   byte count = 0;
-  for (int i = 0; i < IMAX; i++) {
+  for (int i = 0; i < maxItems; i++) {
     if (inv[i].ii == 0) {
       inv[i].ii = 255;
       count++;
     }
   }
-  for (int i = 0; i < IMAX; ++i) {
-    for (int j = i + 1; j < IMAX; ++j) {
+  for (int i = 0; i < maxItems; ++i) {
+    for (int j = i + 1; j < maxItems; ++j) {
       if (inv[i].ii > inv[j].ii) {
 /*
         byte tmp1 =  inv[i].ii;
@@ -87,7 +87,7 @@ byte sortItem() {
       }
     }
   }
-  for (int i = 0; i < IMAX; i++) {
+  for (int i = 0; i < maxItems; i++) {
     if (inv[i].ii == 255) {
       inv[i].ii = 0;
     }
@@ -96,7 +96,7 @@ byte sortItem() {
 }
 
 byte findScroll(byte t) {
-  for (byte i = 0; i < SCMAX; i++) {
+  for (byte i = 0; i < maxScrolls; i++) {
     if (ttab[1][i] == t) return i;
   }
   return 0; // 0 can't ever be a valid scroll since we need a default for "not found"
@@ -112,7 +112,7 @@ void dropItem(byte x, byte y, byte st) {
       setActiveMessage(3);
     } else {
       byte t = freeSlot();
-      if (t == TMAX) {
+      if (t == maxThings) {
         setActiveMessage(4);
       } else {
         thing[x][y] = t + 1;

@@ -12,7 +12,7 @@ void clearKnown() {
   memset(known, 0, sizeof(known));
   memset(tng, 0, sizeof(tng));
 
-  for (int i = 0; i < MMAX; i++) {
+  for (int i = 0; i < maxMonsters; i++) {
     mx[i] = 0;
     my[i] = 0;
     ms[i] = 0;
@@ -137,7 +137,7 @@ void drawHero() {     //@Pharap's sharp eye
 
 void drawMonst() {
 
-  for (int i = 0; i < MMAX; i++) {
+  for (int i = 0; i < maxMonsters; i++) {
     if (ms[i] / 32 != 0) {
       if (hero.hmdet == 0) {
         if (isDark[dungeon[hero.x][hero.y] % 10 - 1] == 0 && dungeon[hero.x][hero.y] != 8 &&
@@ -188,7 +188,7 @@ byte canBless() {
 }
 
 void moveMonst() {
-  for (int i = 0; i < MMAX; i++) {
+  for (int i = 0; i < maxMonsters; i++) {
     if (ms[i] == 0) {
       if (random(128) == 0) {
         generateMon(i);
@@ -281,7 +281,7 @@ void placeMonst() {
   for (int i = 0; i <= 8 + isBigRoom * 7; i++) {
     if ( random(3) == 0) {
       int h = 0;
-      if(isBigRoom==0) h=random(RMAX) * 2;
+      if(isBigRoom==0) h=random(maxRooms) * 2;
       if (hasRoom[h] == 0) h++;
       mx[i] = roomSX[h] + random(roomEX[h] - roomSX[h] + 1);
       my[i] = roomSY[h] + random(roomEY[h] - roomSY[h] + 1);
@@ -299,9 +299,9 @@ void placeMonst() {
 void generateMon(byte m) {
   byte stt, mon;
   int hr = ((dungeon[hero.x][hero.y] - 1) % 10 - ((dungeon[hero.x][hero.y] - 1) % 10) % 2) / 2;
-  //  int h = ((hr + random(2) + 1) % RMAX) * 2;
+  //  int h = ((hr + random(2) + 1) % maxRooms) * 2;
   int h = 0;
-  if(isBigRoom==0) h=((hr + 1) % RMAX) * 2;
+  if(isBigRoom==0) h=((hr + 1) % maxRooms) * 2;
   if (hasRoom[h] == 0) h++;
   mx[m] = roomSX[h] + random(roomEX[h] - roomSX[h] + 1);
   my[m] = roomSY[h] + random(roomEY[h] - roomSY[h] + 1);
@@ -331,7 +331,7 @@ void showMsg() {
 }
 
 void placeThing() {
-  for ( int i = 0; i < RMAX * 2; i++) {
+  for ( int i = 0; i < maxRooms * 2; i++) {
     if (hasRoom[i] == 1) {
       for (int j = 0; j < 3 + isBigRoom * 7; j++) {
         byte ix = random(roomSX[i], roomEX[i] + 1);
@@ -342,7 +342,7 @@ void placeThing() {
   }
 
   if( hero.dungeon_level % 3 ==0){
-    for ( int i = 0; i < RMAX * 2; i++) {
+    for ( int i = 0; i < maxRooms * 2; i++) {
       if (hasRoom[i] == 1) {
         byte ix = random(roomSX[i], roomEX[i] + 1);
         byte iy = random(roomSY[i], roomEY[i] + 1);
@@ -353,7 +353,7 @@ void placeThing() {
 
   if (hero.dungeon_level >= adepth && inv[hero.itemCount - 1].ii != 144) {
     byte a = 0;
-    if(isBigRoom==0) a=random(RMAX) * 2;
+    if(isBigRoom==0) a=random(maxRooms) * 2;
     if (hasRoom[a] == 0) a++;
     byte ax = roomSX[a] + random(roomEX[a] - roomSX[a] + 1);
     byte ay = roomSY[a] + random(roomEY[a] - roomSY[a] + 1);
@@ -396,7 +396,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
         bitWrite(tng[t].i4, 7, 1);
         break;
       case 3: //weapon
-        vari = random(WEMAX);
+        vari = random(maxWeapons);
         tng[t].ii = 48 + vari;
         if (vari < 4) {
           tng[t].i1 = 1;
@@ -419,7 +419,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
         }
         break;
       case 4: //armor
-        vari = random(ARMAX);
+        vari = random(maxArmour);
         tng[t].ii = 64 + vari;
         tng[t].i1 = 1;
         r1 = random(6);
@@ -446,7 +446,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
         bitWrite(tng[t].i4, 7, 1);
         break;
       case 7: //ring
-        vari = random(RGMAX);
+        vari = random(maxRings);
         tng[t].ii = 112 + vari;
         tng[t].i1 = 1;
         switch ( ttab[2][vari] ) {
@@ -471,7 +471,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
         }
         break;
       case 8:
-        vari = random(WDMAX);
+        vari = random(maxWands);
         tng[t].ii = 128 + vari;
         tng[t].i1 = 1;
         tng[t].i2 = 3 + random(4);
@@ -543,7 +543,7 @@ void checkThing(byte x, byte y) {
         }
       }
       if (done == 0) {
-        if (hero.itemCount == IMAX) {
+        if (hero.itemCount == maxItems) {
           setActiveMessage(2);
         } else {
 /*

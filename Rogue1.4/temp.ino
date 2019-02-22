@@ -7,7 +7,7 @@ void makeDungeon2() {
   int temp[2] = {};
   int dr, fm, to, ro;
 
-  for(int i=0; i<(RMAX * 2); i++){
+  for(int i=0; i<(maxRooms * 2); i++){
     hasRoom[i]=0;
   }
 //縦に３分割する
@@ -63,7 +63,7 @@ void makeDungeon2() {
     }
   }
 //部屋の大きさを決める
-  for (int i = 0; i < (RMAX * 2); i++) {
+  for (int i = 0; i < (maxRooms * 2); i++) {
     if (hasRoom[i] == 1) {
       int roomX = random(areaEX[i] - areaSX[i] - 2) + 2; // 2<= roomX <= areaEX-areaSX+1-2
       int roomY = random(areaEY[i] - areaSY[i] - 2) + 2;
@@ -73,7 +73,7 @@ void makeDungeon2() {
       roomEY[i] = roomSY[i] + roomY - 1;
     }
   }
-  for (int i = 0; i < (RMAX * 2); i++) {
+  for (int i = 0; i < (maxRooms * 2); i++) {
     if (hasRoom[i] == 0) {
       if (( i % 2 ) == 0) {
         roomSX[i] = roomSX[i + 1] + random(roomEX[i + 1] - roomSX[i + 1] + 1);
@@ -89,7 +89,7 @@ void makeDungeon2() {
     }
   }
 //部屋を配列に書き込む
-  for (int i = 0; i < (RMAX * 2); i++) {
+  for (int i = 0; i < (maxRooms * 2); i++) {
     if (hasRoom[i] == 1) {
       for (int x = roomSX[i] - 1; x <= roomEX[i] + 1; x++) {
         for (int y = roomSY[i] - 1; y <= roomEY[i] + 1; y++) {
@@ -271,7 +271,7 @@ void makeDungeon2() {
 
 void teleportHero(){
   int h=0;
-  if(isBigRoom==0) h=random(RMAX)*2;
+  if(isBigRoom==0) h=random(maxRooms)*2;
   if(hasRoom[h]==0) h++;
   hero.x=roomSX[h]+random(roomEX[h]-roomSX[h]+1);
   hero.y=roomSY[h]+random(roomEY[h]-roomSY[h]+1);

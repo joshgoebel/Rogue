@@ -40,7 +40,7 @@ void flashMonst(byte num){
 
 void initHero(){
 
-  for(int i=0; i<IMAX; i++){
+  for(int i=0; i<maxItems; i++){
     deleteItem(i);
 //    ii[i]=0;
 //    i1[i]=0;
@@ -69,7 +69,7 @@ void initHero(){
 }
 
 void initTable(){
-  const byte vari[4] = {POMAX, SCMAX, RGMAX, WDMAX};
+  const byte vari[4] = {maxPotions, maxScrolls, maxRings, maxWands};
   for (int v = 0; v < 4; v++) {
     for (int i = 0; i < 50; i++) {
       byte r1 = random(vari[v]);

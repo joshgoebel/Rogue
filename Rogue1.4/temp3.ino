@@ -127,7 +127,7 @@ void makeDungeon4() {
 
   //罠の設置
   if( isBigRoom == 0 ){
-    for(int i=0; i<RMAX*2; i++){
+    for(int i=0; i<maxRooms*2; i++){
       if(hasRoom[i] ==1 && random(3)==0 ){
 //        dungeon[roomSX[i] + random(roomEX[i] - roomSX[i] + 1)][roomSY[i] + random(roomEY[i] - roomSY[i] + 1)] = (random(7)+1)*10 + 1 + i;
         buildStructure( i, random(6)*10 + 31 + i );
@@ -143,7 +143,7 @@ void makeDungeon4() {
 
   //階段をつくる
   int s = 0;
-  if( isBigRoom==0 ) s = random(RMAX) * 2;
+  if( isBigRoom==0 ) s = random(maxRooms) * 2;
   if (hasRoom[s] == 0) s++;
 //  dungeon[roomSX[s] + random(roomEX[s] - roomSX[s] + 1)][roomSY[s] + random(roomEY[s] - roomSY[s] + 1)] = 11 + s;
   buildStructure( s, 11+s );

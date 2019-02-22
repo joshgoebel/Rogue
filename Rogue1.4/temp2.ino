@@ -10,7 +10,7 @@ void makeDungeon3() {
   for(int i=0; i<4; i++){
     hasRoom[i]=0;
   }
-//縦に３分割する  
+//縦に３分割する
   int r=7+random(7);
 //横に２分割する
   int r3 = random(6) + 1;
@@ -30,9 +30,9 @@ void makeDungeon3() {
     if (random(2) == 0) {
       pass[random(3) + 4] = 0;
     }
-  } 
+  }
   //passstat==3 なら縦につなぐ
-  
+
 //部屋の大きさを決める
   for (int i = 0; i <= 3; i++) {
     if (hasRoom[i] == 1) {
@@ -199,9 +199,9 @@ void makeDungeon3() {
       }
     }
   }
-  
+
 //階段をつくる
-  int s=random(RMAX)*2;
+  int s=random(maxRooms)*2;
   if(hasRoom[s]==0) s++;
   dungeon[roomSX[s]+random(roomEX[s]-roomSX[s]+1)][roomSY[s]+random(roomEY[s]-roomSY[s]+1)] =11+s;
 //暗い部屋をつくる

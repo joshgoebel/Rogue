@@ -1,14 +1,3 @@
-#define WEMAX   8     //9
-#define ARMAX   7     //8
-#define POMAX   14    //14
-#define SCMAX   12    //14
-#define RGMAX   11    //14
-#define WDMAX   10    //14
-#define RMAX    2
-#define IMAX    26
-#define TMAX    40
-#define MMAX    16
-
 #include <Arduboy2.h>
 #include "src/fonts/Font5x7.h"
 #include "FlashStringHelper.h"
@@ -16,6 +5,17 @@ FlashStringHelper activeMessage = nullptr;
 
 Arduboy2Base arduboy;
 Font5x7 font5x7 = Font5x7();
+
+constexpr uint8_t maxWeapons = 8; //maxWeapons
+constexpr uint8_t maxArmour = 7; //maxArmour
+constexpr uint8_t maxPotions = 14; //maxPotions
+constexpr uint8_t maxScrolls = 12; //maxScrolls
+constexpr uint8_t maxRings = 11; //maxRings
+constexpr uint8_t maxWands = 10; //maxWands
+constexpr uint8_t maxRooms = 2; //maxRooms
+constexpr uint8_t maxItems = 26; //maxItems
+constexpr uint8_t maxThings = 40; //maxThings
+constexpr uint8_t maxMonsters = 16; //maxMonsters
 
 struct Score {        //my first 'structure'
   long int gold;
@@ -88,7 +88,7 @@ const char nItem[113][8] PROGMEM = {
 const char tsym[9] PROGMEM = {'*', ':', ')', '[', '!', '?', '=', '/', ','};
 const char tprob[9] PROGMEM = {0, 10, 15, 24, 33, 63, 93, 96, 100};
 
-const char psprob[2][POMAX + 1] PROGMEM = {
+const char psprob[2][maxPotions + 1] PROGMEM = {
   {0, 5, 10, 20, 25, 35, 40, 50, 60, 65, 75, 85, 90, 95, 100},
   {0, 5, 10, 15, 20, 35, 45, 55, 65, 75, 85, 90,100,100, 100}
 //  {0, 0, 0, 0, 0, 100, 100, 100, 100, 100, 100, 100,100,100, 100}
@@ -130,10 +130,10 @@ const byte mstat[26][7] PROGMEM = {
   {132,  7, 50, 100,  30,   0, 0b00000101},  //24 J 3000
   {145,  8, 60, 100,  50,  90, 0b00000010}   //25 D 5000
 };
-const char wstat[WEMAX][2] PROGMEM = {
+const char wstat[maxWeapons][2] PROGMEM = {
   { 2, 3 }, { 3, 4 }, { 4, 5 }, { 1, 1 }, { 1, 1 }, { 1, 2 }, { 1, 3 }, { 1, 4 }
 };
-const char astat[ARMAX] PROGMEM = {
+const char astat[maxArmour] PROGMEM = {
   2, 3, 4, 5, 6, 6, 7
 };
 
@@ -148,21 +148,21 @@ byte death=0;
 byte rank=0;
 
 byte ss = 0;      //show status flag
-char roomSX[RMAX * 2] = {}, roomSY[RMAX * 2] = {}, roomEX[RMAX * 2] = {}, roomEY[RMAX * 2] = {};
-byte hasRoom[RMAX * 2] = {};
-byte isDark[RMAX * 2] = {};
+char roomSX[maxRooms * 2] = {}, roomSY[maxRooms * 2] = {}, roomEX[maxRooms * 2] = {}, roomEY[maxRooms * 2] = {};
+byte hasRoom[maxRooms * 2] = {};
+byte isDark[maxRooms * 2] = {};
 byte isBigRoom=0;
-byte mx[MMAX], my[MMAX], ms[MMAX], mh[MMAX], m1[MMAX], m2[MMAX];
-//byte id[TMAX] = {}, t1[TMAX] = {}, t4[TMAX] = {};
-//byte ii[IMAX] = {}, i1[IMAX] = {}, i4[IMAX] = {};
+byte mx[maxMonsters], my[maxMonsters], ms[maxMonsters], mh[maxMonsters], m1[maxMonsters], m2[maxMonsters];
+//byte id[maxThings] = {}, t1[maxThings] = {}, t4[maxThings] = {};
+//byte ii[maxItems] = {}, i1[maxItems] = {}, i4[maxItems] = {};
 //byte fi = 0, f1 = 0, f4 = 0;
-//char t2[TMAX] = {}, t3[TMAX] = {};
-//char i2[IMAX] = {}, i3[IMAX] = {};
+//char t2[maxThings] = {}, t3[maxThings] = {};
+//char i2[maxItems] = {}, i3[maxItems] = {};
 //char f2 = 0, f3 = 0;
-byte ttab[4][POMAX];
+byte ttab[4][maxPotions];
 
-item inv[IMAX];
-item tng[TMAX];
+item inv[maxItems];
+item tng[maxThings];
 item ftng;
 
 unsigned int tknow[4]; //0:potion, 1:scroll, 2:ring, 3:wand
