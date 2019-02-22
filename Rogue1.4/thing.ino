@@ -99,6 +99,7 @@ byte findScroll(byte t) {
   for (byte i = 0; i < SCMAX; i++) {
     if (ttab[1][i] == t) return i;
   }
+  return 0; // 0 can't ever be a valid scroll since we need a default for "not found"
 }
 
 void dropItem(byte x, byte y, byte st) {

@@ -101,7 +101,7 @@ const char mname[26] PROGMEM = {
   'J', 'D'
 };
 
-const char mstat[26][7] PROGMEM = {
+const byte mstat[26][7] PROGMEM = {
   //  hp,  r+XdY, dex, exp,item, state
   { 10,  1,  4,  60,   2,   0, 0b10000011},  // 0 K  76543210
   { 11,  1,  3,  65,   2,   0, 0b00000010},  // 1 E         wake
@@ -239,7 +239,6 @@ enum GameState : uint8_t {
 ARDUBOY_NO_USB
 
 void setup() {
-  byte r;
   //  byte eep=EEPROM.read(10);
   //  arduboy.begin();
   arduboy.boot();
@@ -300,7 +299,6 @@ void setup() {
 }
 
 void loop() {
-  byte tmp;
   if (!(arduboy.nextFrame())) return;
   arduboy.pollButtons();
   arduboy.clear();
