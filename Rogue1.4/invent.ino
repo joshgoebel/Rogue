@@ -1,7 +1,7 @@
 #include "strings.h"
 #include "FlashStringHelper.h"
 
-byte inputWait() {
+DEBUG_STORAGE byte inputWait() {
   byte result = 0;
   do {
     arduboy.pollButtons();
@@ -17,7 +17,7 @@ byte inputWait() {
   return result;
 }
 
-void drawInventry(byte st, byte mode) {
+DEBUG_STORAGE void drawInventry(byte st, byte mode) {
   byte ed;
   arduboy.clear();
   locate(0, 0);
@@ -91,7 +91,7 @@ void drawInventry(byte st, byte mode) {
   arduboy.display();
 }
 
-byte inventry(byte mode) {
+DEBUG_STORAGE byte inventry(byte mode) {
   byte st = 0;
   byte ex = 0;
   do {
@@ -117,7 +117,7 @@ byte inventry(byte mode) {
   return st;
 }
 
-byte action(byte st) {
+DEBUG_STORAGE byte action(byte st) {
   byte curs = 0;
 //  arduboy.setTextBackground(WHITE);
 //  arduboy.fillRect(6,8,75,8,WHITE);
@@ -212,7 +212,7 @@ byte action(byte st) {
   return 1;
 }
 
-void showStatus() {
+DEBUG_STORAGE void showStatus() {
   byte h = 0;
   if (hero.x < 10) {
     h = 11;
@@ -267,7 +267,7 @@ void showStatus() {
   font5x7.print(hero.experience);
 }
 
-void search() {
+DEBUG_STORAGE void search() {
   for (int i = hero.x - 1; i <= hero.x + 1; i++) {
     for (int j = hero.y - 1; j <= hero.y + 1; j++) {
       if (dungeon[i][j] >= 31 && dungeon[i][j] <= 106) {

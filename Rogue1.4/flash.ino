@@ -1,4 +1,4 @@
-void flashHero(){
+DEBUG_STORAGE void flashHero(){
   if(!blind()) {
     drawMap();
     drawThing();
@@ -16,7 +16,7 @@ void flashHero(){
 //  font5x7.setTextColor(WHITE);
 }
 
-void flashMonst(byte num){
+DEBUG_STORAGE void flashMonst(byte num){
   if(!blind()) {
     drawMap();
     drawThing();
@@ -38,7 +38,7 @@ void flashMonst(byte num){
 //  font5x7.setTextColor(WHITE);
 }
 
-void initHero(){
+DEBUG_STORAGE void initHero(){
 
   for(int i=0; i<maxItems; i++){
     deleteItem(i);
@@ -68,7 +68,7 @@ void initHero(){
 
 }
 
-void initTable(){
+DEBUG_STORAGE void initTable(){
   const byte vari[4] = {maxPotions, maxScrolls, maxRings, maxWands};
   for (int v = 0; v < 4; v++) {
     for (int i = 0; i < 50; i++) {

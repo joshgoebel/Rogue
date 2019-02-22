@@ -1,4 +1,4 @@
-void box(byte x1, byte y1, byte x2, byte y2, byte kind) {
+DEBUG_STORAGE void box(byte x1, byte y1, byte x2, byte y2, byte kind) {
   for (int x = x1; x < x2 + 1; x++) {
     for (int y = y1; y < y2 + 1; y++) {
       dungeon[x][y] = kind;
@@ -6,7 +6,7 @@ void box(byte x1, byte y1, byte x2, byte y2, byte kind) {
   }
 }
 
-void makeRoom(byte i) {
+DEBUG_STORAGE void makeRoom(byte i) {
   for (int x = roomSX[i] - 1; x <= roomEX[i] + 1; x++) {
     if (dungeon[x][roomSY[i] - 1] == 8) {
       dungeon[x][roomSY[i] - 1] = 21 + i + random(2) * 200; //'+'
@@ -35,7 +35,7 @@ void makeRoom(byte i) {
 }
 
 
-void makeDungeon4() {
+DEBUG_STORAGE void makeDungeon4() {
   char areaSX[4] = {}, areaSY[4] = {}, areaEX[4] = {}, areaEY[4] = {};
   char root = 0;
   int pass[4] = {1, 1, 1, 1};
@@ -168,7 +168,7 @@ void makeDungeon4() {
   }
 */
 
-void buildStructure( byte room, byte structure){
+DEBUG_STORAGE void buildStructure( byte room, byte structure){
   dungeon[roomSX[room] + random(roomEX[room] - roomSX[room] + 1)][roomSY[room] + random(roomEY[room] - roomSY[room] + 1)] = structure;
 }
 

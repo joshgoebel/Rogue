@@ -1,4 +1,4 @@
-byte randThing() {
+DEBUG_STORAGE byte randThing() {
   byte done = 0;
   byte count = 0;
   byte r = random(100);
@@ -12,7 +12,7 @@ byte randThing() {
   return count + 1;
 }
 
-byte randPS(byte i) {     //i=0,potion 1,scroll
+DEBUG_STORAGE byte randPS(byte i) {     //i=0,potion 1,scroll
   byte done = 0;
   byte count = 0;
   byte r = random(100);
@@ -44,7 +44,7 @@ byte freeSlot() {
 }
 */
 
-byte freeSlot() {
+DEBUG_STORAGE byte freeSlot() {
   for (uint8_t index = 0; index < maxThings; ++index) {
     if(tng[index].ii == 0) {
       return index;
@@ -53,7 +53,7 @@ byte freeSlot() {
   return maxThings;
 }
 
-byte sortItem() {
+DEBUG_STORAGE byte sortItem() {
   byte count = 0;
   for (int i = 0; i < maxItems; i++) {
     if (inv[i].ii == 0) {
@@ -95,14 +95,14 @@ byte sortItem() {
   return 20 - count;
 }
 
-byte findScroll(byte t) {
+DEBUG_STORAGE byte findScroll(byte t) {
   for (byte i = 0; i < maxScrolls; i++) {
     if (ttab[1][i] == t) return i;
   }
   return 0; // 0 can't ever be a valid scroll since we need a default for "not found"
 }
 
-void dropItem(byte x, byte y, byte st) {
+DEBUG_STORAGE void dropItem(byte x, byte y, byte st) {
   if (bitRead(inv[st].i4, 4) == 0) {
     if (inv[st].ii == 16 * 6 + findScroll(7) ) { //&& bitRead(sknow,7)==1){
       inv[st].i1--;
@@ -133,7 +133,7 @@ void dropItem(byte x, byte y, byte st) {
   }
 }
 
-void useItem(byte st) {
+DEBUG_STORAGE void useItem(byte st) {
   byte kind = inv[st].ii / 16;
   byte vari = inv[st].ii % 16;
   //  if (hslep == 0) {
@@ -188,7 +188,7 @@ void useItem(byte st) {
   //  }
 }
 
-byte randMonst(byte d) {
+DEBUG_STORAGE byte randMonst(byte d) {
   char fm = d - 6;
   char to = d + 3;
   if (fm < 0) {
@@ -202,7 +202,7 @@ byte randMonst(byte d) {
   return random(fm, to);
 }
 
-void wakeUp() {
+DEBUG_STORAGE void wakeUp() {
   for (int i = 0; i < 16; i++) {
     if (ms[i] / 32 == 2) {
       if ((abs(mx[i] - hero.x) + abs(my[i] - hero.y)) <= 2) {
@@ -214,7 +214,7 @@ void wakeUp() {
   }
 }
 
-byte strToDmg(byte str) {
+DEBUG_STORAGE byte strToDmg(byte str) {
   byte result = 0;
   if (str >= 1 && str <= 5) {
     result = str - 5;
@@ -236,7 +236,7 @@ byte strToDmg(byte str) {
   return result;
 }
 
-void deleteItem(byte i) {
+DEBUG_STORAGE void deleteItem(byte i) {
   inv[i].ii = 0;
   inv[i].i1 = 0;
   inv[i].i2 = 0;
@@ -246,7 +246,7 @@ void deleteItem(byte i) {
   sortItem();
 }
 
-void throwItem(byte i) {    //i=pack num 0 to 19
+DEBUG_STORAGE void throwItem(byte i) {    //i=pack num 0 to 19
   char hdex = 0, hdmg = 0, dmg = 0;
   int dest = 0;
   if (bitRead(inv[i].i4, 4) == 0 || (inv[i].ii / 16 == 3 && inv[i].ii % 16 >= 4)) {
@@ -336,7 +336,7 @@ void throwItem(byte i) {    //i=pack num 0 to 19
 }
 
 
-void dropThrown(byte x, byte y, byte fi, byte f1, char f2, char f3, byte f4) {
+DEBUG_STORAGE void dropThrown(byte x, byte y, byte fi, byte f1, char f2, char f3, byte f4) {
   char destd;
   if (thing[x][y] == 0) {
     destd = 5;
@@ -356,7 +356,7 @@ void dropThrown(byte x, byte y, byte fi, byte f1, char f2, char f3, byte f4) {
   }
 }
 
-void hitPotion(byte vari, byte mon) { //mon=1 to 26 ID
+DEBUG_STORAGE void hitPotion(byte vari, byte mon) { //mon=1 to 26 ID
   flashMonst(mon - 1);
   switch (ttab[0][vari]) {
     case 0:
@@ -380,7 +380,7 @@ void hitPotion(byte vari, byte mon) { //mon=1 to 26 ID
   }
 }
 
-void hitWand(byte vari, byte mon, byte x, byte y) {
+DEBUG_STORAGE void hitWand(byte vari, byte mon, byte x, byte y) {
   byte dmg=0;
   flashMonst(mon - 1);
   switch (ttab[3][vari]) {
@@ -427,7 +427,7 @@ void hitWand(byte vari, byte mon, byte x, byte y) {
   }
 }
 
-byte askDir() {
+DEBUG_STORAGE byte askDir() {
   arduboy.clear();
   if (!blind()) {
     drawMap();

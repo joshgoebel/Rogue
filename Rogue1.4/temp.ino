@@ -269,7 +269,7 @@ void makeDungeon2() {
 */
 }
 
-void teleportHero(){
+DEBUG_STORAGE void teleportHero(){
   int h=0;
   if(isBigRoom==0) h=random(maxRooms)*2;
   if(hasRoom[h]==0) h++;

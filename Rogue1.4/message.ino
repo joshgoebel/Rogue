@@ -40,7 +40,7 @@ void itmToGitm(byte type, byte r, byte k){
   } else {
     for(int i=0; i<8; i++){
       gitm[i]=pgm_read_byte(nItem[index[type+4]+ttab[type-5][r]]+i);
-    }    
+    }
   }
 }
 
@@ -62,7 +62,7 @@ void clearBuf()
   setActiveMessage(29);
 }
 */
-void setActiveMessage(byte id)
+DEBUG_STORAGE void setActiveMessage(byte id)
 {
   activeMessage = asFlashStringHelper(pgm_read_ptr(&messages[id]));
 }
@@ -71,7 +71,7 @@ void setActiveMessage(byte id)
 {
 }*/
 
-void itmToGitm(byte type, byte r, byte k)
+DEBUG_STORAGE void itmToGitm(byte type, byte r, byte k)
 {
   activeMessage = asFlashStringHelper(getItemName(type, r, k));
 }

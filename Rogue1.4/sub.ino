@@ -6,7 +6,7 @@ byte getKnown(byte x, byte y) {
   return bitRead(known[x / 8][y], x % 8);
 }
 
-void clearKnown() {
+DEBUG_STORAGE void clearKnown() {
   memset(monst, 0, sizeof(monst));
   memset(thing, 0, sizeof(thing));
   memset(known, 0, sizeof(known));
@@ -22,12 +22,12 @@ void clearKnown() {
   }
 }
 
-void allKnown() {
+DEBUG_STORAGE void allKnown() {
   // flip all bits to set
   memset(known, 0xFF, sizeof(known));
 }
 
-void makeKnown() {
+DEBUG_STORAGE void makeKnown() {
   if (dungeon[hero.x][hero.y] >= 1 && dungeon[hero.x][hero.y] <= 6 && isDark[dungeon[hero.x][hero.y] - 1] == 0 ) {
     //  if (dungeon[x][y] >= 1 && dungeon[x][y] <= 6 ) {
     for (int i = 0; i < 21; i++) {
@@ -52,7 +52,7 @@ void makeKnown() {
   }
 }
 
-void clearDungeon() {
+DEBUG_STORAGE void clearDungeon() {
   memset(dungeon, 0, sizeof(dungeon));
 }
 
@@ -60,7 +60,7 @@ void locate(int x, int y) {
   font5x7.setCursor(1 + x * 6, y * 8-1);
 }
 
-void drawMap() {    //@Pharap's sharp eye
+DEBUG_STORAGE void drawMap() {    //@Pharap's sharp eye
   for (int i = 0; i < 21; i++) {
     for (int j = 0; j < 8; j++) {
       locate(i, j);
@@ -117,7 +117,7 @@ void drawMap() {    //@Pharap's sharp eye
 }
 
 
-void drawHero() {     //@Pharap's sharp eye
+DEBUG_STORAGE void drawHero() {     //@Pharap's sharp eye
   if (!blind()) {
     for (int i = 0; i <= 2; i++) {
       for (int j = 0; j <= 2; j++) {
@@ -135,7 +135,7 @@ void drawHero() {     //@Pharap's sharp eye
   font5x7.print('@');
 }
 
-void drawMonst() {
+DEBUG_STORAGE void drawMonst() {
 
   for (int i = 0; i < maxMonsters; i++) {
     if (ms[i] / 32 != 0) {
@@ -159,7 +159,7 @@ void drawMonst() {
   }
 }
 
-void drawMonstSub(byte i) {
+DEBUG_STORAGE void drawMonstSub(byte i) {
   if (bitRead(m1[i], 6) == 0 || hasRing(8) > 0 || hero.hisee == 1) {
     if (hallucinating()) {
       if (ms[i] / 32 == 3) {
@@ -177,7 +177,7 @@ void drawMonstSub(byte i) {
   }
 }
 
-byte canBless() {
+DEBUG_STORAGE byte canBless() {
   byte result = 0;
   int dra;
   for (int i = 1; i <= 4; i++) {
@@ -187,7 +187,7 @@ byte canBless() {
   return result;
 }
 
-void moveMonst() {
+DEBUG_STORAGE void moveMonst() {
   for (int i = 0; i < maxMonsters; i++) {
     if (ms[i] == 0) {
       if (random(128) == 0) {
@@ -276,7 +276,7 @@ void moveMonst() {
   }
 }
 
-void placeMonst() {
+DEBUG_STORAGE void placeMonst() {
   byte stt, mon;
   for (int i = 0; i <= 8 + isBigRoom * 7; i++) {
     if ( random(3) == 0) {
@@ -296,7 +296,7 @@ void placeMonst() {
   }
 }
 
-void generateMon(byte m) {
+DEBUG_STORAGE void generateMon(byte m) {
   byte stt, mon;
   int hr = ((dungeon[hero.x][hero.y] - 1) % 10 - ((dungeon[hero.x][hero.y] - 1) % 10) % 2) / 2;
   //  int h = ((hr + random(2) + 1) % maxRooms) * 2;
@@ -310,7 +310,7 @@ void generateMon(byte m) {
   }
 }
 
-void placeMonXY( byte i, byte x, byte y) {
+DEBUG_STORAGE void placeMonXY( byte i, byte x, byte y) {
   byte mon = randMonst(hero.dungeon_level);
   byte stt = initState(mon);
   ms[i] = stt * 32 + mon;
@@ -321,7 +321,7 @@ void placeMonXY( byte i, byte x, byte y) {
   monst[x][y] = i + 1;
 }
 
-void showMsg() {
+DEBUG_STORAGE void showMsg() {
   if (hero.y >= 4) {
     locate(0, 0);
   } else {
@@ -330,7 +330,7 @@ void showMsg() {
   font5x7.print(activeMessage);
 }
 
-void placeThing() {
+DEBUG_STORAGE void placeThing() {
   for ( int i = 0; i < maxRooms * 2; i++) {
     if (hasRoom[i] == 1) {
       for (int j = 0; j < 3 + isBigRoom * 7; j++) {
@@ -367,7 +367,7 @@ void placeThing() {
   }
 }
 
-void placeThingXY(byte ix, byte iy, byte r) {
+DEBUG_STORAGE void placeThingXY(byte ix, byte iy, byte r) {
   byte r1, r2, r3, vari, kind;
   if (thing[ix][iy] == 0) {
     byte t = freeSlot();
@@ -480,7 +480,7 @@ void placeThingXY(byte ix, byte iy, byte r) {
   }
 }
 
-void drawThing() {
+DEBUG_STORAGE void drawThing() {
   for (int i = 0; i < 21; i++) {
     for (int j = 0; j < 8; j++) {
       //      if (known[i][j] == 1 && thing[i][j] != 0 ) {
@@ -496,7 +496,7 @@ void drawThing() {
   font5x7.print('@');
 }
 
-void checkThing(byte x, byte y) {
+DEBUG_STORAGE void checkThing(byte x, byte y) {
   if (thing[x][y] == 0) {
     setActiveMessage(29);
 //    clearBuf();
@@ -565,7 +565,7 @@ void checkThing(byte x, byte y) {
   }
 }
 
-void deleteThing(byte i) {
+DEBUG_STORAGE void deleteThing(byte i) {
   tng[i].ii = 0;
   tng[i].i1 = 0;
   tng[i].i2 = 0;
@@ -573,7 +573,7 @@ void deleteThing(byte i) {
   tng[i].i4 = 0;
 }
 
-byte initState(byte mon) {
+DEBUG_STORAGE byte initState(byte mon) {
   byte result = 1;
   byte state = pgm_read_byte(mstat[mon] + 6) % 16;
   switch (state) {

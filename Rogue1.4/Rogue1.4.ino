@@ -1,3 +1,7 @@
+#define DEBUG_STORAGE __attribute__((noinline))
+// by default we are not debugging storage
+#define DEBUG_STORAGE
+
 #include <Arduboy2.h>
 #include "src/fonts/Font5x7.h"
 #include "FlashStringHelper.h"

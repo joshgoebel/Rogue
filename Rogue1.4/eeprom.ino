@@ -1,25 +1,25 @@
 #define EEPROM_HIGHSCORE 100
 
-void saveHiScore(){
+DEBUG_STORAGE void saveHiScore(){
   for(uint8_t i = 0; i < 5; i++){
     EEPROM.put(EEPROM_HIGHSCORE + i * 5, glory[i]);
   }
 }
 
-void loadHiScore(){
+DEBUG_STORAGE void loadHiScore(){
   for(uint8_t i = 0; i < 5; i++){
     EEPROM.get(EEPROM_HIGHSCORE + i * 5, glory[i]);
   }
 }
 
-void clearHiScore(){
+DEBUG_STORAGE void clearHiScore(){
   for (uint8_t i = 0; i < 5; i++) {
     glory[i] = {0, 0};
   }
   saveHiScore();
 }
 
-void saveStatus(){
+DEBUG_STORAGE void saveStatus(){
   EEPROM.put(120, hero);
   for(int i=0; i<26; i++){
     EEPROM.put(200+i*5, inv[i]);
@@ -34,7 +34,7 @@ void saveStatus(){
   }
 }
 
-void loadStatus(){
+DEBUG_STORAGE void loadStatus(){
   EEPROM.get(120, hero);
   for(int i=0; i<26; i++){
     EEPROM.get(200+i*5, inv[i]);

@@ -1,4 +1,4 @@
-void eat(byte r) {
+DEBUG_STORAGE void eat(byte r) {
 /*
   if (r == 0 && random(3) == 0) {
     mess(7);
@@ -13,7 +13,7 @@ void eat(byte r) {
 //  }
 }
 
-void wield(byte r) {
+DEBUG_STORAGE void wield(byte r) {
   if (bitRead(inv[r].i4, 4) == 1) {
     if (bitRead(inv[r].i4, 6) == 1) {
       setActiveMessage(9);            // cursed
@@ -48,7 +48,7 @@ void wield(byte r) {
   }
 }
 
-void ringPut(byte r, char i) {
+DEBUG_STORAGE void ringPut(byte r, char i) {
   switch (ttab[2][inv[r].ii % 16]) {
     case 4:
       hero.ringStrength = hero.ringStrength + inv[r].i2 * i;
@@ -59,7 +59,7 @@ void ringPut(byte r, char i) {
   }
 }
 
-void drink(byte r) {
+DEBUG_STORAGE void drink(byte r) {
   switch (ttab[0][r]) {
     case 0:       //power
       if (hero.strength == hero.maxStrength) {      //@Pharap's sharp eye
@@ -129,7 +129,7 @@ void drink(byte r) {
   }
 }
 
-void readScroll(byte r) {
+DEBUG_STORAGE void readScroll(byte r) {
   byte ex = 0, i = 0, st = 0, dx, dy;
   int fp;
   switch (ttab[1][r]) {
@@ -230,7 +230,7 @@ void readScroll(byte r) {
   }
 }
 
-void zap(byte vari) {
+DEBUG_STORAGE void zap(byte vari) {
   byte dir = askDir();
   int dest = checkHit(dir, 20);
   byte mon = dest / 256;
@@ -239,7 +239,7 @@ void zap(byte vari) {
   if (mon != 0) hitWand( vari, mon, destx, desty);
 }
 
-byte equip(byte type, byte n) {     //type=3(weapon),4(armor),7(ring), n=1 or 2(for ring)...rtab[equip(7,2)]
+DEBUG_STORAGE byte equip(byte type, byte n) {     //type=3(weapon),4(armor),7(ring), n=1 or 2(for ring)...rtab[equip(7,2)]
   byte result = 0;
   for (int i = 0; i < 20; i++) {
     if (inv[i].ii / 16 == type) {
@@ -254,7 +254,7 @@ byte equip(byte type, byte n) {     //type=3(weapon),4(armor),7(ring), n=1 or 2(
   return result;      //0=nothing, num=pack+1
 }
 
-byte hasRing(byte vari) {
+DEBUG_STORAGE byte hasRing(byte vari) {
   byte result = 0;
   for (byte i = 0; i < 2; i++) {
     if (equip(7, i + 1) != 0) {
@@ -266,7 +266,7 @@ byte hasRing(byte vari) {
   return result;
 }
 
-int checkHit(byte dir, byte str) {
+DEBUG_STORAGE int checkHit(byte dir, byte str) {
   char dx = (dir - 2) * (dir % 2);
   char dy = (dir - 3) * ((dir - 1) % 2);
   byte ex = 0, i = 0;
@@ -290,7 +290,7 @@ int checkHit(byte dir, byte str) {
   return mon * 256 + y * 21 + x;
 }
 
-byte findPlace(byte x, byte y, byte tm) {   //tm=0:thing, 1:monst
+DEBUG_STORAGE byte findPlace(byte x, byte y, byte tm) {   //tm=0:thing, 1:monst
   byte result = 0;
   byte ex = 0, i = 0, r = random(8);
   monst[hero.x][hero.y] = 255;

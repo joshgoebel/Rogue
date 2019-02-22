@@ -1,4 +1,4 @@
-void hitMonst(byte mm, byte r, char dx, char dy) { //mm=monst[x][y](1 to 16) r=kind(0 to 25
+DEBUG_STORAGE void hitMonst(byte mm, byte r, char dx, char dy) { //mm=monst[x][y](1 to 16) r=kind(0 to 25
   byte rr = random(100);
   byte dmg = 0;
   byte w = equip(3, 1);
@@ -16,7 +16,7 @@ void hitMonst(byte mm, byte r, char dx, char dy) { //mm=monst[x][y](1 to 16) r=k
   }
 }
 
-void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=vari, dmg, hitpos x,y
+DEBUG_STORAGE void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=vari, dmg, hitpos x,y
   if (mh[m] <= dmg) {
     monst[x][y] = 0;
     ms[m] = 0;
@@ -43,7 +43,7 @@ void checkMonst(byte m, byte r, byte dmg, byte x, byte y) { //m=id(0...15), r=va
   }
 }
 
-void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
+DEBUG_STORAGE void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
   byte prob = pgm_read_byte(mstat[i] + 3) - hero.level * 2 - hero.ringDexterity * 2;
   byte rr = random(100);
   char dmg = 0;
@@ -73,7 +73,7 @@ void hitHero(byte i, byte r) { //i=kind(0 to 25 r=ID(0 to 15)
   }
 }
 
-void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp eye
+DEBUG_STORAGE void specialAttack(byte mon, byte id) {  //mon=0 to 25 mon vari, @Pharas sharp eye
 
   bool hit = false;
   byte eq, ac, prob;

@@ -1,4 +1,4 @@
-void titleScreen() {
+DEBUG_STORAGE void titleScreen() {
 //  arduboy.setRGBled(0, 0, 0);
   locate(1, 2);
   font5x7.print(F("[@ ~]$ Rogue"));
@@ -58,7 +58,7 @@ void titleScreen() {
   }
 }
 
-void atLanding(){
+DEBUG_STORAGE void atLanding(){
   locate(5,2);
   font5x7.print(F("Next floor "));
   font5x7.print(hero.dungeon_level);
@@ -82,7 +82,7 @@ void atLanding(){
   }
 }
 
-void gameOver() {
+DEBUG_STORAGE void gameOver() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -153,7 +153,7 @@ byte digits(long int num) {
   return ans;
 }
 
-void gameWinner() {
+DEBUG_STORAGE void gameWinner() {
   wiz = 0;
   adepth = 26;
   EEPROM.update(20,0);
@@ -190,7 +190,7 @@ void gameWinner() {
   }
 }
 
-void showHighScores() {
+DEBUG_STORAGE void showHighScores() {
 
   //  byte rank = checkHiScore();
 
@@ -237,7 +237,7 @@ void showHighScores() {
 
 }
 
-byte checkHiScore() {
+DEBUG_STORAGE byte checkHiScore() {
   Score tglory;
   byte result = 0;
   if (hero.dungeon_level == 0) hero.dungeon_level = 255;
@@ -262,7 +262,7 @@ byte checkHiScore() {
   return result;
 }
 
-void gameLoop() {
+DEBUG_STORAGE void gameLoop() {
   byte mm, r;
 
   if (arduboy.justPressed(LEFT_BUTTON)) {
@@ -333,7 +333,7 @@ void gameLoop() {
   showMsg();
 }
 
-void buildDungeon() {
+DEBUG_STORAGE void buildDungeon() {
   clearDungeon();
   makeDungeon4();
   placeMonst();
@@ -342,7 +342,7 @@ void buildDungeon() {
   //  addBuf((char)dlv);
 }
 
-void heroMove(byte dir) {
+DEBUG_STORAGE void heroMove(byte dir) {
   if (confused()) {
     dir = random(4) + 1;
   }
@@ -394,7 +394,7 @@ void heroMove(byte dir) {
 
 // bear?
 
-void traped(byte vari){
+DEBUG_STORAGE void traped(byte vari){
   byte dmg=0;
   if(random(2)==0){
     flashHero();
@@ -434,7 +434,7 @@ void traped(byte vari){
 //  addBuf(" trap");
 }
 
-void charon(byte dmg, byte reason){
+DEBUG_STORAGE void charon(byte dmg, byte reason){
   if( hero.hp <= dmg ) {
     death = reason;
     gameState = gameover;
