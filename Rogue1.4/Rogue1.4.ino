@@ -11,6 +11,8 @@
 
 #include <Arduboy2.h>
 #include "src/fonts/Font5x7.h"
+#include "FlashStringHelper.h"
+FlashStringHelper activeMessage = nullptr;
 
 Arduboy2Base arduboy;
 Font5x7 font5x7 = Font5x7();
@@ -20,7 +22,7 @@ struct Score {        //my first 'structure'
   byte depth;
 };
 
-struct hero {
+typedef struct Hero {
   byte hx;
   byte hy;
   byte im;
@@ -46,7 +48,7 @@ struct hero {
   long int ht;
   long int hh;
   long int nl;
-};
+} Hero;
 
 struct item {
   byte ii;
@@ -141,51 +143,50 @@ byte monst[21][8];
 byte thing[21][8];
 
 
+Hero hero;
 byte death=0;
-/*
-byte hx = 0, hy = 0, im = 7, dlv = 1, st = 16, stm = 16, lv = 1;
-byte hconf = 0, hblnd = 0, hhall = 0, hfast = 0, hslep = 0;
-byte hmdet = 0, hisee = 0, hlevi = 0, hheld = 0;
-char rdex = 0, rstr = 0;
-long int au = 0, hp = 16, hpm = 16, ex = 0, ht = 0, hh = 400, nl = 10;
-*/
 byte rank=0;
-hero hero={0,0,5,1,16,16,1,0,0,0,0,0,0,0,0,0,0,0,0,16,16,0,0,1200,10};
 
 byte ss = 0;      //show status flag
 char roomSX[RMAX * 2] = {}, roomSY[RMAX * 2] = {}, roomEX[RMAX * 2] = {}, roomEY[RMAX * 2] = {};
 byte hasRoom[RMAX * 2] = {};
 byte isDark[RMAX * 2] = {};
 byte isBigRoom=0;
-byte mx[MMAX] = {}, my[MMAX] = {}, ms[MMAX] = {}, mh[MMAX] = {}, m1[MMAX] = {}, m2[MMAX] = {};
+byte mx[MMAX], my[MMAX], ms[MMAX], mh[MMAX], m1[MMAX], m2[MMAX];
 //byte id[TMAX] = {}, t1[TMAX] = {}, t4[TMAX] = {};
 //byte ii[IMAX] = {}, i1[IMAX] = {}, i4[IMAX] = {};
 //byte fi = 0, f1 = 0, f4 = 0;
 //char t2[TMAX] = {}, t3[TMAX] = {};
 //char i2[IMAX] = {}, i3[IMAX] = {};
 //char f2 = 0, f3 = 0;
-byte ttab[4][POMAX] = {
-  {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
-  {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
-  {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13},
-  {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}
-};
+byte ttab[4][POMAX];
 
-item inv[IMAX]={};
-item tng[TMAX]={};
-item ftng={};
+item inv[IMAX];
+item tng[TMAX];
+item ftng;
 
-unsigned int tknow[4] = {0, 0, 0, 0}; //0:potion, 1:scroll, 2:ring, 3:wand
+unsigned int tknow[4]; //0:potion, 1:scroll, 2:ring, 3:wand
 
 byte adepth=26, wiz=0;//, welc=0;
-
-#include "FlashStringHelper.h"
-FlashStringHelper activeMessage = nullptr;
 
 //char gbuf[22];
 char gmon[10];
 //char gitm[8];
 char gmes[15];
+
+/* For some reason Arduino wants this space so it doesn't dump the function
+prototypes in the middle of a comment */
+
+
+
+
+
+
+
+
+
+
+
 /*
 const char trap[6][8] PROGMEM = {
   "door",
@@ -196,6 +197,7 @@ const char trap[6][8] PROGMEM = {
   "rust"
 };
 */
+
 /*
 const char mes[23][10] PROGMEM = {
 // 0123456789012345
@@ -224,6 +226,7 @@ const char mes[23][10] PROGMEM = {
   "ZZZ..."            //22
 };
 */
+
 enum GameState : uint8_t {
   title = 0,
   gameloop, // 1
